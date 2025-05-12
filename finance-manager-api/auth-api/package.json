@@ -1,0 +1,35 @@
+{
+  "name": "finance-manager-api",
+  "version": "1.0.0",
+  "description": "api de gerenciamento de finanças",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "dev": "node npm run dev",
+    "start": "concurrently --prefix \"finance-manager-api\" \"npm run service1\" \"npm run service2\"",
+    "service1": "cd auth-api && npm start",
+    "service2": "cd box-api  && npm start"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/pg": "^8.11.11",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.4.7",
+    "envalid": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.9",
+    "sequelize": "^6.37.7",
+    "ts-node": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.17",
+    "typescript": "^5.8.3"
+  }
+}
