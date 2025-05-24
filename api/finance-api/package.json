@@ -1,27 +1,31 @@
 {
-  "name": "auth-api",
+  "name": "finance-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "API para gerenciamento financeiro",
+  "main": "dist/server.js",
+  "type": "commonjs",
   "scripts": {
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "pg": "^8.14.1",
+    "dotenv": "^16.0.3",
+    "envalid": "^7.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.28.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^5.0.1",
-    "@types/node": "^22.14.0",
-    "typescript": "^5.8.3"
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.3.1",
+    "@types/pg": "^8.6.6",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
   }
 }

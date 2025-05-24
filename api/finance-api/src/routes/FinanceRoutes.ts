@@ -1,7 +1,7 @@
-import express from 'express';
+import express, {Router} from 'express';
 import TransactionController from '../controllers/FinanceController';
 import { transactionMiddleware } from '../middleware/FinanceMiddleware';
-const router = express.Router();
+const router: Router = express.Router();
 const transactionController = new TransactionController();
 
 router.post('/transactions', transactionMiddleware, transactionController.createTransaction);

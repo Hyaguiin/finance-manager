@@ -5,8 +5,6 @@ import { ErrorMissingContent } from "../utils/ErrorMissingContent";
 import { validate as isUuid } from "uuid";
 import { UUIDNotFoundError } from "../utils/Uuid";
 import { NotFound } from "../utils/NotFoundError";
-import jwt from "jsonwebtoken";
-import { jwt_Secret } from "../utils/baseurl/BaseUrll";
 import bcrypt from "bcryptjs";
 
 export class AuthService {

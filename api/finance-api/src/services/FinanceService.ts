@@ -1,8 +1,8 @@
 import TransactionModel from '../models/FinanceModel';
 import { TransactionCreationAttributes } from '../interfaces/TransactionInterface';
-import { ErrorMissingContent } from '../../../auth-api/src/utils/ErrorMissingContent';
-import { NotFound } from '../../../auth-api/src/utils/NotFoundError';
-import { UnknowError } from '../../../auth-api/src/utils/Unkown';
+import { ErrorMissingContent } from '../utils/ErrorMissingContent';
+import { NotFound } from '../utils/NotFoundError';
+import { UnknowError } from '../utils/Unkown';
 
 class TransactionService {
   

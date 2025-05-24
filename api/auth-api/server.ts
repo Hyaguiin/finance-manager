@@ -2,7 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { startServer } from './src/config/database/database';
-import authRoutes from './src/routes/AuthRoutes';
+import authRoutes from './src/routes/AuthRoutes'
 
 const app = express();
 const PORT = Number(process.env['PORT']) || 3000;

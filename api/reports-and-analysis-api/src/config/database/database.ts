@@ -1,9 +1,8 @@
+import { databaseURL } from "../../utils/baseurl/BaseUrl";
 import "dotenv/config";
 import {Sequelize} from 'sequelize';
 
-const dbUrl = process.env.DATABASE_URL as string;
-
-const sequelize = new Sequelize(dbUrl, {
+const sequelize = new Sequelize(databaseURL, {
     dialect: 'postgres',
     logging: true,
 }
