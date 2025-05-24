@@ -32,8 +32,9 @@ app.get('/', (req, res) => {
     }
     catch (err) {
         if (err instanceof Error) {
-            throw err;
+            console.error(`Erro na rota principal: ${err.message}`);
         }
+        res.status(500).send('Internal Server Error');
     }
 });
 app.listen(PORT, async () => {
