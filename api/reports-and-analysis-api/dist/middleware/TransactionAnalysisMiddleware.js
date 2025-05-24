@@ -1,4 +1,7 @@
-export const validateTransactionAnalysisData = (req, res, next) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateTransactionAnalysisData = void 0;
+const validateTransactionAnalysisData = (req, res, next) => {
     const { totalAmount, totalCredit, totalDebit, totalByCategory, transactionId } = req.body;
     if (totalAmount == null ||
         totalCredit == null ||
@@ -20,3 +23,4 @@ export const validateTransactionAnalysisData = (req, res, next) => {
     }
     next();
 };
+exports.validateTransactionAnalysisData = validateTransactionAnalysisData;

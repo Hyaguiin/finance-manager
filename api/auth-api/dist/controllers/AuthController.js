@@ -1,13 +1,19 @@
-import { AuthService } from "../services/AuthService";
-import { UnknowError } from "../utils/Unkown";
-import { jwt_Secret } from "../utils/baseurl/BaseUrll";
-import jwt from "jsonwebtoken";
-import { ErrorMissingContent } from "../utils/ErrorMissingContent";
-import User from "../models/AuthModel";
-import bcrypt from "bcryptjs";
-import { NotFound } from "../utils/NotFoundError";
-import { JwtError } from "../utils/JwtError";
-export class AuthController {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthController = void 0;
+const AuthService_1 = require("../services/AuthService");
+const Unkown_1 = require("../utils/Unkown");
+const BaseUrll_1 = require("../utils/baseurl/BaseUrll");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
+const AuthModel_1 = __importDefault(require("../models/AuthModel"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const NotFoundError_1 = require("../utils/NotFoundError");
+const JwtError_1 = require("../utils/JwtError");
+class AuthController {
     constructor() {
         this.register = async (req, res) => {
             const { name, email, password, cpf, cnpj } = req.body;
@@ -26,10 +32,10 @@ export class AuthController {
                     cpf,
                     cnpj,
                 });
-                const token = jwt.sign({
+                const token = jsonwebtoken_1.default.sign({
                     userId: registeredUser.id,
                     userEmail: registeredUser.email,
-                }, jwt_Secret, { expiresIn: "1h" });
+                }, BaseUrll_1.jwt_Secret, { expiresIn: "1h" });
                 res.status(201).json({
                     success: true,
                     message: "Usuário registrado com sucesso!",
@@ -53,7 +59,7 @@ export class AuthController {
                 else {
                     res.status(500).json({
                         success: false,
-                        message: `Erro desconhecido: ${new UnknowError().message}`,
+                        message: `Erro desconhecido: ${new Unkown_1.UnknowError().message}`,
                     });
                 }
             }
@@ -64,26 +70,26 @@ export class AuthController {
                 if (!email || !password) {
                     res
                         .status(500)
-                        .json({ sucess: false, message: `Error: ${ErrorMissingContent}` });
+                        .json({ sucess: false, message: `Error: ${ErrorMissingContent_1.ErrorMissingContent}` });
                     return;
                 }
-                const login = await User.findOne({ where: { email: email } });
+                const login = await AuthModel_1.default.findOne({ where: { email: email } });
                 if (!login) {
                     res
                         .status(400)
-                        .json({ sucess: false, message: `Failed to find: ${NotFound}` });
+                        .json({ sucess: false, message: `Failed to find: ${NotFoundError_1.NotFound}` });
                     return;
                 }
-                const isPasswordCorret = bcrypt.compare(password, login.password);
+                const isPasswordCorret = bcryptjs_1.default.compare(password, login.password);
                 if (!isPasswordCorret) {
                     res
                         .status(400)
                         .json({ sucess: false, message: `the Password is not Match!` });
                     return;
                 }
-                const token = jwt.sign({ userId: login.id, userEmail: login.email }, jwt_Secret, { expiresIn: "1h" });
+                const token = jsonwebtoken_1.default.sign({ userId: login.id, userEmail: login.email }, BaseUrll_1.jwt_Secret, { expiresIn: "1h" });
                 if (!token) {
-                    res.status(400).json({ sucess: false, message: `error: ${JwtError}` });
+                    res.status(400).json({ sucess: false, message: `error: ${JwtError_1.JwtError}` });
                     return;
                 }
                 res.status(200).json({
@@ -102,7 +108,7 @@ export class AuthController {
                 else {
                     res.status(500).json({
                         success: false,
-                        message: `Erro desconhecido: ${new UnknowError().message}`,
+                        message: `Erro desconhecido: ${new Unkown_1.UnknowError().message}`,
                     });
                 }
             }
@@ -113,12 +119,12 @@ export class AuthController {
                 if (!token) {
                     res
                         .status(500)
-                        .json({ sucess: false, message: `Error: ${ErrorMissingContent}` });
+                        .json({ sucess: false, message: `Error: ${ErrorMissingContent_1.ErrorMissingContent}` });
                     return;
                 }
-                const decode = jwt.verify(token, jwt_Secret);
+                const decode = jsonwebtoken_1.default.verify(token, BaseUrll_1.jwt_Secret);
                 if (!decode) {
-                    res.status(400).json({ sucess: false, message: `${JwtError}` });
+                    res.status(400).json({ sucess: false, message: `${JwtError_1.JwtError}` });
                     return;
                 }
                 res
@@ -135,11 +141,12 @@ export class AuthController {
                 else {
                     res.status(500).json({
                         success: false,
-                        message: `Erro desconhecido: ${new UnknowError().message}`,
+                        message: `Erro desconhecido: ${new Unkown_1.UnknowError().message}`,
                     });
                 }
             }
         };
-        this.authService = new AuthService();
+        this.authService = new AuthService_1.AuthService();
     }
 }
+exports.AuthController = AuthController;

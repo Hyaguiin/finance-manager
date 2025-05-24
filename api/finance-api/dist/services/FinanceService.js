@@ -1,30 +1,35 @@
-import TransactionModel from '../models/FinanceModel';
-import { ErrorMissingContent } from '../utils/ErrorMissingContent';
-import { NotFound } from '../utils/NotFoundError';
-import { UnknowError } from '../utils/Unkown';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const FinanceModel_1 = __importDefault(require("../models/FinanceModel"));
+const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
+const NotFoundError_1 = require("../utils/NotFoundError");
+const Unkown_1 = require("../utils/Unkown");
 class TransactionService {
     async createTransaction(transactionData) {
         try {
             const { amount, type, description, category, date, userId } = transactionData;
             if (!amount || !type || !description || !category || !date || !userId) {
-                throw new ErrorMissingContent();
+                throw new ErrorMissingContent_1.ErrorMissingContent();
             }
-            await TransactionModel.create(transactionData);
+            await FinanceModel_1.default.create(transactionData);
         }
         catch (err) {
             if (err instanceof Error) {
                 throw err;
             }
             else {
-                throw new UnknowError();
+                throw new Unkown_1.UnknowError();
             }
         }
     }
     async getAllTransactions() {
         try {
-            const transactions = await TransactionModel.findAll();
+            const transactions = await FinanceModel_1.default.findAll();
             if (transactions.length === 0) {
-                throw new NotFound();
+                throw new NotFoundError_1.NotFound();
             }
             return transactions;
         }
@@ -33,18 +38,18 @@ class TransactionService {
                 throw err;
             }
             else {
-                throw new UnknowError();
+                throw new Unkown_1.UnknowError();
             }
         }
     }
     async getTransactionById(id) {
         try {
             if (!id) {
-                throw new ErrorMissingContent();
+                throw new ErrorMissingContent_1.ErrorMissingContent();
             }
-            const transaction = await TransactionModel.findOne({ where: { id } });
+            const transaction = await FinanceModel_1.default.findOne({ where: { id } });
             if (!transaction) {
-                throw new NotFound();
+                throw new NotFoundError_1.NotFound();
             }
             return transaction;
         }
@@ -53,9 +58,9 @@ class TransactionService {
                 throw err;
             }
             else {
-                throw new UnknowError();
+                throw new Unkown_1.UnknowError();
             }
         }
     }
 }
-export default TransactionService;
+exports.default = TransactionService;

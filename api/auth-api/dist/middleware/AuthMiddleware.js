@@ -1,6 +1,12 @@
-import jwt from "jsonwebtoken";
-import { jwt_Secret as SECRET_KEY } from "../utils/baseurl/BaseUrll";
-export const authMiddleware = async (req, res, next) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authMiddleware = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const BaseUrll_1 = require("../utils/baseurl/BaseUrll");
+const authMiddleware = async (req, res, next) => {
     try {
         const header = req.headers.authorization;
         const token = header?.split(" ")[1];
@@ -11,7 +17,7 @@ export const authMiddleware = async (req, res, next) => {
             });
             return;
         }
-        const decoded = jwt.verify(token, SECRET_KEY);
+        const decoded = jsonwebtoken_1.default.verify(token, BaseUrll_1.jwt_Secret);
         if (typeof decoded === "string") {
             res.status(401).json({
                 success: false,
@@ -32,3 +38,4 @@ export const authMiddleware = async (req, res, next) => {
         });
     }
 };
+exports.authMiddleware = authMiddleware;

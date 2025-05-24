@@ -1,4 +1,9 @@
-import TransactionAnalysisService from '../services/TransactionAnalysisService';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const TransactionAnalysisService_1 = __importDefault(require("../services/TransactionAnalysisService"));
 class TransactionAnalysisController {
     constructor() {
         this.create = async (req, res) => {
@@ -61,7 +66,7 @@ class TransactionAnalysisController {
                 }
             }
         };
-        this.analysisService = new TransactionAnalysisService();
+        this.analysisService = new TransactionAnalysisService_1.default();
     }
 }
-export default TransactionAnalysisController;
+exports.default = TransactionAnalysisController;

@@ -1,4 +1,7 @@
-export const transactionMiddleware = async (req, res, next) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.transactionMiddleware = void 0;
+const transactionMiddleware = async (req, res, next) => {
     try {
         const { amount, type, description, category, date, userId } = req.body;
         if (!amount || !type || !description || !category || !date || !userId) {
@@ -30,3 +33,4 @@ export const transactionMiddleware = async (req, res, next) => {
         }
     }
 };
+exports.transactionMiddleware = transactionMiddleware;

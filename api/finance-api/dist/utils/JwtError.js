@@ -1,4 +1,7 @@
-export class JwtError extends Error {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.JwtError = void 0;
+class JwtError extends Error {
     constructor(message = 'JWT Error', token) {
         super(message);
         if (!token) {
@@ -9,3 +12,4 @@ export class JwtError extends Error {
         Object.setPrototypeOf(this, JwtError.prototype);
     }
 }
+exports.JwtError = JwtError;

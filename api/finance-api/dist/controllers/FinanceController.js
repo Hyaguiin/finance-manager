@@ -1,7 +1,12 @@
-import TransactionService from '../services/FinanceService';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const FinanceService_1 = __importDefault(require("../services/FinanceService"));
 class TransactionController {
     constructor() {
-        this.transactionService = new TransactionService();
+        this.transactionService = new FinanceService_1.default();
     }
     async createTransaction(req, res) {
         try {
@@ -51,4 +56,4 @@ class TransactionController {
         }
     }
 }
-export default TransactionController;
+exports.default = TransactionController;

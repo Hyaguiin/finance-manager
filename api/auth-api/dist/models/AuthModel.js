@@ -1,41 +1,48 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database/database';
-export class User extends Model {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
+const sequelize_1 = require("sequelize");
+const database_1 = __importDefault(require("../config/database/database"));
+class User extends sequelize_1.Model {
 }
+exports.User = User;
 User.init({
     id: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
     },
     name: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
     password: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     cpf: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
     cnpj: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
         unique: true,
     },
 }, {
-    sequelize,
+    sequelize: database_1.default,
     tableName: 'users',
     modelName: 'User',
     timestamps: true,
 });
-export default User;
+exports.default = User;

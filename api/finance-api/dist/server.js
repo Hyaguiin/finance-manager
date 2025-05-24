@@ -1,11 +1,16 @@
-import express from 'express';
-import 'dotenv/config';
-import cors from 'cors';
-import { startServer } from './config/database/database';
-import financeRoutes from './routes/FinanceRoutes';
-const app = express();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+require("dotenv/config");
+const cors_1 = __importDefault(require("cors"));
+const database_1 = require("./config/database/database");
+const FinanceRoutes_1 = __importDefault(require("./routes/FinanceRoutes"));
+const app = (0, express_1.default)();
 const PORT = process.env['PORT'] || 3000;
-app.use(express.json());
+app.use(express_1.default.json());
 const allowedDomains = process.env['CORS_ALLOWED_DOMAINS']?.split(',') || [];
 const corsOptions = {
     origin: function (origin, callback) {
@@ -17,11 +22,11 @@ const corsOptions = {
         }
     }
 };
-app.use(cors(corsOptions));
-app.use('/', financeRoutes);
+app.use((0, cors_1.default)(corsOptions));
+app.use('/', FinanceRoutes_1.default);
 app.listen(PORT, async () => {
     try {
-        await startServer().then(() => {
+        await (0, database_1.startServer)().then(() => {
             console.log(`DB✅✅, Connected on: ${PORT}`);
         }).catch((err) => {
             console.error(`Erro ao iniciar ou ao conectar no banco de dados!`);
@@ -37,4 +42,4 @@ app.listen(PORT, async () => {
         }
     }
 });
-export default app;
+exports.default = app;

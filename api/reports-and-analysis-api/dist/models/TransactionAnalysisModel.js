@@ -1,37 +1,42 @@
-import sequelize from "../config/database/database";
-import { DataTypes, Model } from "sequelize";
-class TransactionAnalysisModel extends Model {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const database_1 = __importDefault(require("../config/database/database"));
+const sequelize_1 = require("sequelize");
+class TransactionAnalysisModel extends sequelize_1.Model {
 }
 TransactionAnalysisModel.init({
     id: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
     },
     totalAmount: {
-        type: DataTypes.FLOAT,
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
     },
     totalCredit: {
-        type: DataTypes.FLOAT,
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
     },
     totalDebit: {
-        type: DataTypes.FLOAT,
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
     },
     totalByCategory: {
-        type: DataTypes.JSONB,
+        type: sequelize_1.DataTypes.JSONB,
         allowNull: false,
     },
     generatedAt: {
-        type: DataTypes.DATE,
+        type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        defaultValue: sequelize_1.DataTypes.NOW,
     },
     transactionId: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         references: {
             model: 'transactions',
@@ -39,9 +44,9 @@ TransactionAnalysisModel.init({
         }
     }
 }, {
-    sequelize,
+    sequelize: database_1.default,
     tableName: "transaction_analyses",
     modelName: "TransactionAnalysis",
     timestamps: true,
 });
-export default TransactionAnalysisModel;
+exports.default = TransactionAnalysisModel;

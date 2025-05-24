@@ -1,37 +1,42 @@
-import sequelize from "../config/database/database";
-import { DataTypes, Model } from "sequelize";
-class TransactionModel extends Model {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const database_1 = __importDefault(require("../config/database/database"));
+const sequelize_1 = require("sequelize");
+class TransactionModel extends sequelize_1.Model {
 }
 TransactionModel.init({
     id: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
     },
     amount: {
-        type: DataTypes.FLOAT,
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
     },
     type: {
-        type: DataTypes.ENUM('CREDIT', 'DEBIT'),
+        type: sequelize_1.DataTypes.ENUM('CREDIT', 'DEBIT'),
         allowNull: false,
     },
     description: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     category: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     date: {
-        type: DataTypes.DATE,
+        type: sequelize_1.DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        defaultValue: sequelize_1.DataTypes.NOW,
     },
     userId: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         references: {
             model: 'users',
@@ -39,9 +44,9 @@ TransactionModel.init({
         }
     }
 }, {
-    sequelize,
+    sequelize: database_1.default,
     tableName: "transactions",
     modelName: "Transaction",
     timestamps: true,
 });
-export default TransactionModel;
+exports.default = TransactionModel;

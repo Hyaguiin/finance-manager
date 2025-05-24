@@ -1,11 +1,14 @@
-import "dotenv/config";
-import { Sequelize } from 'sequelize';
-import { databaseURL } from "../../utils/baseurl/BaseUrl";
-const sequelize = new Sequelize(databaseURL, {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.startServer = void 0;
+require("dotenv/config");
+const sequelize_1 = require("sequelize");
+const BaseUrl_1 = require("../../utils/baseurl/BaseUrl");
+const sequelize = new sequelize_1.Sequelize(BaseUrl_1.databaseURL, {
     dialect: 'postgres',
     logging: true,
 });
-export const startServer = async () => {
+const startServer = async () => {
     try {
         sequelize.authenticate()
             .then(() => {
@@ -29,4 +32,5 @@ export const startServer = async () => {
         }
     }
 };
-export default sequelize;
+exports.startServer = startServer;
+exports.default = sequelize;

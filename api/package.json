@@ -1,20 +1,21 @@
 {
-  "devDependencies": {
-    "@types/uuid": "^10.0.0",
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  },
-  
+  "name": "root_microservice",
+  "version": "1.0.0",
+  "description": "Root package for multiple APIs",
+  "main": "server.ts",
   "scripts": {
-    "dev": "concurrently \"npm run auth-api\" \"npm run finance-api\" \"npm run reports-and-analysis-api\"",
-    "auth-api": "nodemon --exec ts-node ./auth-api/server.ts",
-    "finance-api": "nodemon --exec ts-node ./finance-api/server.ts",
-    "reports-and-analysis-api": "nodemon --exec ts-node ./reports-and-analysis-api/server.ts"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run build --prefix auth-api && npm run start --prefix auth-api\" \"npm run build --prefix finance-api && npm run start --prefix finance-api\" \"npm run build --prefix reports-and-analysis-api && npm run start --prefix reports-and-analysis-api\"",
+    "build": "tsc"
   },
-
-  "dependencies": {
-    "uuid": "^11.1.0"
+  "author": "Hyago",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^22.13.14",
+    "concurrently": "^9.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }
