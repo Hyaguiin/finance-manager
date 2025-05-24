@@ -26,15 +26,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/api/auth', authRoutes);
 
-app.get('/', (req, res)=>{
-  try{
-    res.send(`Servidor Rodando!!`)
-  }catch(err){
+app.get('/', (req, res) => {
+  try {
+    res.send(`Servidor Rodando!!`);
+  } catch (err) {
     if(err instanceof Error){
-      throw err;
+
+      console.error(`Erro na rota principal: ${err.message}`);
     }
+    res.status(500).send('Internal Server Error');
   }
-}) 
+});
+
 
 app.listen(PORT, async () => {
   try {
