@@ -1,11 +1,13 @@
 import "dotenv/config";
 import {Sequelize} from 'sequelize';
 import { databaseURL } from "../../utils/baseurl/BaseUrl";
+import pg from 'pg';
 
 
 
 const sequelize = new Sequelize(databaseURL, {
     dialect: 'postgres',
+    dialectModule: pg,
     logging: true,
 }
 );
