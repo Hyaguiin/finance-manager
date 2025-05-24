@@ -2,10 +2,11 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { startServer } from './src/config/database/database';
-import authRoutes from './src/routes/AuthRoutes'; 
+import authRoutes from './src/routes/AuthRoutes';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env['PORT']) || 3000;
+
 app.use(express.json());
 
 let allDomains = [
@@ -38,7 +39,7 @@ app.listen(PORT, async () => {
     if (err instanceof Error) {
       console.error(`Error: ${err}`);
     } else {
-      console.error(`Unknow Error`);
+      console.error(`Unknown Error`);
     }
   }
 });

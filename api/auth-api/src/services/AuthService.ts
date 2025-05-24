@@ -1,76 +1,95 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import UserModel from '../models/AuthModel';
-import { UserCreationAttributes } from '../interfaces/AuthInterface';
-import { ErrorMissingContent } from '../utils/ErrorMissingContent';
-import { InvalidCredentialsError } from '../utils/InvalidCreationAttributes';
-import { UnknowError } from '../utils/Unkown';
-import { jwt_Secret as SECRET_KEY } from '../utils/baseurl/BaseUrll';
+import { UserCreationAttributes } from "../interfaces/AuthInterface";
+import User from "../models/AuthModel";
+import { UnknowError } from "../utils/Unkown";
+import { ErrorMissingContent } from "../utils/ErrorMissingContent";
+import { validate as isUuid } from "uuid";
+import { UUIDNotFoundError } from "../utils/Uuid";
+import { NotFound } from "../utils/NotFoundError";
+import jwt from "jsonwebtoken";
+import { jwt_Secret } from "../utils/baseurl/BaseUrll";
+import bcrypt from "bcryptjs";
 
-class AuthService {
+export class AuthService {
+  constructor() {}
 
-  async register(name: string, email: string, password: string, cpf: string, cnpj?: string): Promise<void> {
+  registerService = async (body: UserCreationAttributes) => {
     try {
-      if (!name || !email || !password || !cpf) {
-        throw new ErrorMissingContent();
+      const requiredFields: (keyof UserCreationAttributes)[] = ['email', 'password', 'name'];
+      const missingFields = requiredFields.filter(field => !body[field]);
+
+      if (missingFields.length > 0) {
+        throw new Error(`Missing fields: ${missingFields.join(', ')}`);
       }
 
-      const userExists = await UserModel.findOne({ where: { email } });
-      if (userExists) {
-        throw new Error('Email já cadastrado');
-      }
+      const salt = await bcrypt.genSalt(10);
+      body.password = await bcrypt.hash(body.password, salt);
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-      await UserModel.create({ name, email, password: hashedPassword, cpf, cnpj } as UserCreationAttributes);
+      const register = await User.create(body);
+      console.log(`User created: ${JSON.stringify(register.dataValues)}`);
+      return register;
     } catch (err) {
       if (err instanceof Error) {
-        throw err;
+        throw new Error(`Erro: ${err.message}`);
       }
       throw new UnknowError();
     }
-  }
+  };
 
-  async login(email: string, password: string): Promise<{ user: any; token: string }> {
+  getUserById = async (id: string) => {
     try {
-      if (!email || !password) {
-        throw new ErrorMissingContent();
-      }
+      if (!id) throw new ErrorMissingContent();
+      if (!isUuid(id)) throw new UUIDNotFoundError();
 
-      const user = await UserModel.findOne({ where: { email } });
-      if (!user) {
-        throw new InvalidCredentialsError();
-      }
+      const user = await User.findOne({ where: { id } });
 
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        throw new InvalidCredentialsError();
-      }
+      if (!user) throw new NotFound();
 
-      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' });
-      return { user, token };
+      console.log(`User found: ${JSON.stringify(user.dataValues)}`);
+      return user;
     } catch (err) {
       if (err instanceof Error) {
-        throw err;
+        throw new Error(`Erro: ${err.message}`);
       }
       throw new UnknowError();
     }
-  }
+  };
 
-  async validateToken(token: string): Promise<any> {
+  deleteUser = async (id: string) => {
     try {
-      if (!token) {
-        throw new ErrorMissingContent();
-      }
+      if (!id) throw new ErrorMissingContent();
+      if (!isUuid(id)) throw new UUIDNotFoundError();
 
-      const decoded = jwt.verify(token, SECRET_KEY);
-      return decoded;
+      const user = await this.getUserById(id); 
+      if (!user) throw new NotFound();
+
+      await User.destroy({ where: { id } });
+      console.log(`User deleted: ${JSON.stringify(user.dataValues)}`);
+      return true;
     } catch (err) {
       if (err instanceof Error) {
-        throw err;
+        throw new Error(`Erro: ${err.message}`);
       }
       throw new UnknowError();
     }
-  }
+  };
+
+  compareHashPassword = async (plainPassword: string, hashedPassword: string) => {
+    try {
+      const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
+      if (isMatch) {
+        console.log(`Passwords match!`);
+      } else {
+        console.log(`Passwords do not match.`);
+      }
+      return isMatch;
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(`Erro: ${err.message}`);
+      }
+      throw new UnknowError();
+    }
+  };
+  
+
+
 }
-
-export default new AuthService();

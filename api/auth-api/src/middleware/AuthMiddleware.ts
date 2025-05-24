@@ -1,25 +1,44 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { ErrorMissingContent } from '../utils/ErrorMissingContent';
-import { jwt_Secret as SECRET_KEY } from '../utils/baseurl/BaseUrll';
+import { Request, Response, NextFunction } from "express";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { jwt_Secret as SECRET_KEY } from "../utils/baseurl/BaseUrll";
 
-
-export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-    const token = req.headers['authorization']?.split(' ')[1];
+export const authMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const header = req.headers.authorization;
+    const token = header?.split(" ")[1];
 
     if (!token) {
-        res.status(400).json({ success: false, message: 'Token não fornecido' });
-        return;
+      res.status(401).json({
+        success: false,
+        message: "Erro: Token não fornecido.",
+      });
+      return;
     }
 
-    jwt.verify(token, SECRET_KEY, (err, decoded) => {
-        if (err) {
-            res.status(403).json({ success: false, message: 'Token inválido' });
-            return;
-        }
+    const decoded = jwt.verify(token, SECRET_KEY);
 
-        
-        //req.user = decoded;
-        next(); 
+    if (typeof decoded === "string") {
+      res.status(401).json({
+        success: false,
+        message: "Erro: Token inválido.",
+      });
+      return;
+    }
+
+    req.user = {
+      userId: decoded["userId"],
+      userEmail: decoded["userEmail"],
+    };
+
+    next();
+  } catch (err) {
+    res.status(401).json({
+      success: false,
+      message: "Erro ao verificar o token.",
     });
+  }
 };

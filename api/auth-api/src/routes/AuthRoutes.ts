@@ -1,12 +1,13 @@
-import express from 'express';
-import AuthController from '../controllers/AuthController';
-import { authMiddleware } from '../middleware/AuthMiddleware';
+import express from "express";
+import {AuthController} from "../controllers/AuthController";
+import { authMiddleware } from "../middleware/AuthMiddleware";
+const authController = new AuthController();
 const router = express.Router();
 
-router.post('/register', AuthController.register);
+router.post("/register", authController.register);
 
-router.post('/login', AuthController.login);
+router.post("/login", authController.login);
 
-router.get('/validate-token', authMiddleware, AuthController.validateToken); 
+router.get("/validate-token", authMiddleware, authController.validateToken);
 
 export default router;
