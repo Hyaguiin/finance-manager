@@ -22,23 +22,28 @@ TransactionAnalysisModel.init({
     totalAmount: {
         type: DataTypes.FLOAT,
         allowNull: false,
+        field: 'totalamount'
     },
     totalCredit: {
         type: DataTypes.FLOAT,
         allowNull: false,
+        field: 'totalcredit'
     },
     totalDebit: {
         type: DataTypes.FLOAT,
         allowNull: false,
+        field: 'totaldebit'
     },
     totalByCategory: {
         type: DataTypes.JSONB,  
         allowNull: false,
+        field: 'totalbycategory'
     },
     generatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
+        field: 'generatedat'
     },
     transactionId: {
         type: DataTypes.UUID,
@@ -46,13 +51,15 @@ TransactionAnalysisModel.init({
         references: {
             model: 'transactions', 
             key: 'id',
-        }
+        },
+        field: 'transactionid'
     }
 }, {
     sequelize,
     tableName: "transaction_analyses", 
     modelName: "TransactionAnalysis",  
-    timestamps: true,
+    timestamps: false,  // Desabilita a criação de createdAt e updatedAt
 });
+
 
 export default TransactionAnalysisModel;
