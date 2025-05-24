@@ -3,64 +3,72 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TransactionService = void 0;
 const FinanceModel_1 = __importDefault(require("../models/FinanceModel"));
 const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
 const NotFoundError_1 = require("../utils/NotFoundError");
 const Unkown_1 = require("../utils/Unkown");
 class TransactionService {
-    async createTransaction(transactionData) {
-        try {
-            const { amount, type, description, category, date, userId } = transactionData;
-            if (!amount || !type || !description || !category || !date || !userId) {
-                throw new ErrorMissingContent_1.ErrorMissingContent();
+    constructor() {
+        this.createTransaction = async (transactionData) => {
+            try {
+                const { amount, type, description, category, date, userId } = transactionData;
+                if (!amount || !type || !description || !category || !date || !userId) {
+                    throw new ErrorMissingContent_1.ErrorMissingContent();
+                }
+                await FinanceModel_1.default.create(transactionData);
             }
-            await FinanceModel_1.default.create(transactionData);
-        }
-        catch (err) {
-            if (err instanceof Error) {
-                throw err;
+            catch (err) {
+                console.error("Error in createTransaction: ", err);
+                if (err instanceof Error) {
+                    throw err;
+                }
+                else {
+                    throw new Unkown_1.UnknowError(`Unexpected error occurred in createTransaction: ${JSON.stringify(err)}`);
+                }
             }
-            else {
-                throw new Unkown_1.UnknowError();
+        };
+        this.getAllTransactions = async () => {
+            try {
+                console.log("Service: Recuperando todas as transações...");
+                const transactions = await FinanceModel_1.default.findAll();
+                console.log("Service: Transações encontradas:", transactions);
+                if (transactions.length === 0) {
+                    throw new NotFoundError_1.NotFound();
+                }
+                return transactions;
             }
-        }
-    }
-    async getAllTransactions() {
-        try {
-            const transactions = await FinanceModel_1.default.findAll();
-            if (transactions.length === 0) {
-                throw new NotFoundError_1.NotFound();
+            catch (err) {
+                console.error("Erro no Service:", err);
+                if (err instanceof Error) {
+                    throw err;
+                }
+                else {
+                    throw new Unkown_1.UnknowError();
+                }
             }
-            return transactions;
-        }
-        catch (err) {
-            if (err instanceof Error) {
-                throw err;
+        };
+        this.getTransactionById = async (id) => {
+            try {
+                if (!id) {
+                    throw new ErrorMissingContent_1.ErrorMissingContent();
+                }
+                const transaction = await FinanceModel_1.default.findOne({ where: { id } });
+                if (!transaction) {
+                    throw new NotFoundError_1.NotFound();
+                }
+                return transaction;
             }
-            else {
-                throw new Unkown_1.UnknowError();
+            catch (err) {
+                console.error("Error in getTransactionById: ", err);
+                if (err instanceof Error) {
+                    throw err;
+                }
+                else {
+                    throw new Unkown_1.UnknowError(`Unexpected error occurred in getTransactionById: ${JSON.stringify(err)}`);
+                }
             }
-        }
-    }
-    async getTransactionById(id) {
-        try {
-            if (!id) {
-                throw new ErrorMissingContent_1.ErrorMissingContent();
-            }
-            const transaction = await FinanceModel_1.default.findOne({ where: { id } });
-            if (!transaction) {
-                throw new NotFoundError_1.NotFound();
-            }
-            return transaction;
-        }
-        catch (err) {
-            if (err instanceof Error) {
-                throw err;
-            }
-            else {
-                throw new Unkown_1.UnknowError();
-            }
-        }
+        };
     }
 }
-exports.default = TransactionService;
+exports.TransactionService = TransactionService;

@@ -4,9 +4,8 @@ import { ErrorMissingContent } from '../utils/ErrorMissingContent';
 import { NotFound } from '../utils/NotFoundError';
 import { UnknowError } from '../utils/Unkown';
 
-class TransactionService {
-  
-    async createTransaction(transactionData: TransactionCreationAttributes): Promise<void> {
+export class TransactionService {  // Exportação nomeada
+     createTransaction = async(transactionData: TransactionCreationAttributes) => {
         try {
             const { amount, type, description, category, date, userId } = transactionData;
 
@@ -16,22 +15,28 @@ class TransactionService {
 
             await TransactionModel.create(transactionData);
         } catch (err) {
+            console.error("Error in createTransaction: ", err);
             if (err instanceof Error) {
                 throw err;
             } else {
-                throw new UnknowError();
+                throw new UnknowError(`Unexpected error occurred in createTransaction: ${JSON.stringify(err)}`);
             }
         }
     }
 
-    async getAllTransactions(): Promise<any[]> {
+     getAllTransactions = async()=> {
         try {
+            console.log("Service: Recuperando todas as transações...");
             const transactions = await TransactionModel.findAll();
+            console.log("Service: Transações encontradas:", transactions);
+
             if (transactions.length === 0) {
                 throw new NotFound();
             }
+
             return transactions;
         } catch (err) {
+            console.error("Erro no Service:", err);
             if (err instanceof Error) {
                 throw err;
             } else {
@@ -40,7 +45,7 @@ class TransactionService {
         }
     }
 
-    async getTransactionById(id: string): Promise<any> {
+     getTransactionById = async(id: string)=> {
         try {
             if (!id) {
                 throw new ErrorMissingContent();
@@ -53,13 +58,12 @@ class TransactionService {
 
             return transaction;
         } catch (err) {
+            console.error("Error in getTransactionById: ", err);
             if (err instanceof Error) {
                 throw err;
             } else {
-                throw new UnknowError();
+                throw new UnknowError(`Unexpected error occurred in getTransactionById: ${JSON.stringify(err)}`);
             }
         }
     }
 }
-
-export default TransactionService;

@@ -21,7 +21,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use('/', financeRoutes);
+app.use('/transaction', financeRoutes);
 
 app.listen(PORT, async () => {
   try {

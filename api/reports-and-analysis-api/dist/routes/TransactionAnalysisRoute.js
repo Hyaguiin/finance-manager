@@ -8,9 +8,9 @@ const TransactionAnalysisController_1 = __importDefault(require("../controllers/
 const TransactionAnalysisMiddleware_1 = require("../middleware/TransactionAnalysisMiddleware");
 const router = express_1.default.Router();
 const transactionAnalysisController = new TransactionAnalysisController_1.default();
-router.post('/transaction-analyses', TransactionAnalysisMiddleware_1.validateTransactionAnalysisData, transactionAnalysisController.create);
-router.get('/transaction-analyses', transactionAnalysisController.getAll);
-router.get('/transaction-analyses/:id', transactionAnalysisController.getById);
-router.put('/transaction-analyses/:id', transactionAnalysisController.update);
-router.delete('/transaction-analyses/:id', transactionAnalysisController.delete);
+router.post("/", TransactionAnalysisMiddleware_1.validateTransactionAnalysisData, transactionAnalysisController.create);
+router.get("/", transactionAnalysisController.getAll);
+router.get("/:id", transactionAnalysisController.getById);
+router.put("/:id", transactionAnalysisController.update);
+router.delete("/:id", transactionAnalysisController.delete);
 exports.default = router;

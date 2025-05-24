@@ -23,7 +23,7 @@ const corsOptions = {
     }
 };
 app.use((0, cors_1.default)(corsOptions));
-app.use('/', TransactionAnalysisRoute_1.default);
+app.use('/transaction-analyse', TransactionAnalysisRoute_1.default);
 app.listen(PORT, async () => {
     try {
         await (0, database_1.startServer)().then(() => {

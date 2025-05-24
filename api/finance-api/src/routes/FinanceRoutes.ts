@@ -1,11 +1,13 @@
-import express, {Router} from 'express';
-import TransactionController from '../controllers/FinanceController';
+import express, { Router } from 'express';
+import {TransactionController} from '../controllers/FinanceController';
 import { transactionMiddleware } from '../middleware/FinanceMiddleware';
+
 const router: Router = express.Router();
+
 const transactionController = new TransactionController();
 
-router.post('/transactions', transactionMiddleware, transactionController.createTransaction);
-router.get('/transactions', transactionMiddleware, transactionController.getAllTransactions);
-router.get('/transactions/:id', transactionMiddleware, transactionController.getTransactionById);
+router.post('/', transactionMiddleware, transactionController.createTransaction);
+router.get('/', transactionController.getAllTransactions);
+router.get('/:id', transactionController.getTransactionById);
 
 export default router;
