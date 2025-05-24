@@ -26,6 +26,16 @@ const corsOptions = {
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use('/api/auth', AuthRoutes_1.default);
+app.get('/', (req, res) => {
+    try {
+        res.send(`Servidor Rodando!!`);
+    }
+    catch (err) {
+        if (err instanceof Error) {
+            throw err;
+        }
+    }
+});
 app.listen(PORT, async () => {
     try {
         await (0, database_1.startServer)().then(() => {

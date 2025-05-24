@@ -26,6 +26,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/api/auth', authRoutes);
 
+app.get('/', (req, res)=>{
+  try{
+    res.send(`Servidor Rodando!!`)
+  }catch(err){
+    if(err instanceof Error){
+      throw err;
+    }
+  }
+}) 
 
 app.listen(PORT, async () => {
   try {

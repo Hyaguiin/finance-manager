@@ -23,6 +23,16 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/transaction-analyse', transactionRoutes);
 
+app.get('/', (req, res)=>{
+  try{
+    res.send(`Servidor Rodando!!`)
+  }catch(err){
+    if(err instanceof Error){
+      throw err;
+    }
+  }
+}) 
+
 app.listen(PORT, async () => {
   try {
     await startServer().then(() => {

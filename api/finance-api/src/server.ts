@@ -23,6 +23,16 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/transaction', financeRoutes);
 
+app.get('/', (req, res)=>{
+  try{
+    res.send(`Servidor Rodando!!`)
+  }catch(err){
+    if(err instanceof Error){
+      throw err;
+    }
+  }
+}) 
+
 app.listen(PORT, async () => {
   try {
     await startServer().then(() => {
