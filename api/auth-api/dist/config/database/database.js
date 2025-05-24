@@ -1,11 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.startServer = void 0;
 require("dotenv/config");
 const sequelize_1 = require("sequelize");
 const BaseUrll_1 = require("../../utils/baseurl/BaseUrll");
+const pg_1 = __importDefault(require("pg"));
 const sequelize = new sequelize_1.Sequelize(BaseUrll_1.databaseURL, {
     dialect: 'postgres',
+    dialectModule: pg_1.default,
     logging: true,
 });
 const startServer = async () => {

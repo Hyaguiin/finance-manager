@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.startServer = void 0;
 const BaseUrl_1 = require("../../utils/baseurl/BaseUrl");
 require("dotenv/config");
+const pg = require('pg');
 const sequelize_1 = require("sequelize");
 const sequelize = new sequelize_1.Sequelize(BaseUrl_1.databaseURL, {
     dialect: 'postgres',
+    dialectModule: pg,
     logging: true,
 });
 const startServer = async () => {
