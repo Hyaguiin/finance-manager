@@ -33,6 +33,22 @@ class AuthService {
                 throw new Unkown_1.UnknowError();
             }
         };
+        this.getAllUsers = async () => {
+            try {
+                const user = await AuthModel_1.default.findAll();
+                console.log(`All Users: ${user}`);
+                if (!user) {
+                    throw new NotFoundError_1.NotFound();
+                }
+                return user;
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    throw new Error(`Erro: ${err.message}`);
+                }
+                throw new Unkown_1.UnknowError();
+            }
+        };
         this.getUserById = async (id) => {
             try {
                 if (!id)

@@ -120,9 +120,47 @@ export class AuthController {
           success: false,
           message: `Erro desconhecido: ${new UnknowError().message}`,
         });
+        return;
       }
     }
   };
+
+ getUsersAfterLogin = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            res.status(401).json({ success: false, message: "Token not provided" });
+            return;
+        }
+
+        const decoded = jwt.verify(token, jwt_Secret) as { userId?: string }; 
+
+        const users = await this.authService.getAllUsers();
+        if (!users || users.length === 0) {
+            res.status(404).json({ success: false, message: "No users found" });
+            return;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "All users retrieved successfully",
+            users: users.map(user => ({
+                id: user.id,
+                email: user.email,
+                decoded
+            }))
+        });
+
+    } catch (err) {
+        if (err instanceof jwt.JsonWebTokenError) {
+            res.status(401).json({ success: false, message: "Invalid token" });
+        } else if (err instanceof Error) {
+            res.status(500).json({ success: false, message: `Error: ${err.message}` });
+        } else {
+            res.status(500).json({ success: false, message: "Unknown error occurred" });
+        }
+    }
+};
 
   validateToken = async (req: Request, res: Response): Promise<void> => {
     const { token = req.headers.authorization?.split(" ")[1] } = req.body;

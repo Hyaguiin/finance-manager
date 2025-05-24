@@ -11,4 +11,5 @@ const router = express_1.default.Router();
 router.post("/register", authController.register);
 router.post("/login", authController.login);
 router.get("/validate-token", AuthMiddleware_1.authMiddleware, authController.validateToken);
+router.get("/user", AuthMiddleware_1.authMiddleware, authController.getUsersAfterLogin);
 exports.default = router;

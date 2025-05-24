@@ -32,6 +32,21 @@ export class AuthService {
       throw new UnknowError();
     }
   };
+  getAllUsers = async()=>{
+    try{
+      const user = await User.findAll();
+      console.log(`All Users: ${user}`);
+      if(!user){
+        throw new NotFound();
+      }
+      return user;
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(`Erro: ${err.message}`);
+      }
+      throw new UnknowError();
+    }
+  }
 
   getUserById = async (id: string) => {
     try {
