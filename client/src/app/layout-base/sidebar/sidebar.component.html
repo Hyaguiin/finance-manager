@@ -1,8 +1,8 @@
 <aside class="sidebar">
-    <ul>
-      <li><a routerLink="/dashboard/analises">Análises</a></li>
-      <li><a routerLink="/dashboard/transacoes">Transações</a></li>
-      <!-- Adicione mais itens conforme necessário -->
-    </ul>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+      <a routerLink="/dashboard/analises" routerLinkActive="active">Análises</a>
+      <a routerLink="/dashboard/transacoes" routerLinkActive="active">Transações</a>
+    </nav>
   </aside>
   
