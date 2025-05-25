@@ -15,7 +15,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    padding-top: 5rem; /* Espaço abaixo do topo */
+    padding-top: 12rem; /* Espaço abaixo do topo */
   }
   
   .sidebar li {
@@ -55,5 +55,18 @@
   
   .sidebar a.active::before {
     color: #ffffff;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      left: -260px; 
+      transition: left 0.3s ease;
+    }
+  
+    .sidebar.active {
+      left: 0; 
+      z-index: 1000; 
+    }
   }
   
