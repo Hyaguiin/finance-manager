@@ -1,0 +1,25 @@
+<div class="auth-wrapper">
+    <div class="auth-card">
+      <h2 class="auth-title">Bem-vindo de volta 👋</h2>
+      <p class="auth-subtitle">Faça login para continuar</p>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" placeholder="exemplo@email.com" />
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input id="password" type="password" formControlName="password" placeholder="Sua senha" />
+        </div>
+  
+        <button type="submit" class="auth-button" [disabled]="loginForm.invalid">Entrar</button>
+      </form>
+  
+      <p class="auth-footer">
+        Não tem uma conta?
+        <a routerLink="/auth/register">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
