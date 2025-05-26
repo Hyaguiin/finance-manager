@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run build --prefix auth-api && npm run start --prefix auth-api\" \"npm run build --prefix finance-api && npm run start --prefix finance-api\" \"npm run build --prefix reports-and-analysis-api && npm run start --prefix reports-and-analysis-api\"",
+    "start": "concurrently \"npm run build --prefix auth-api && npm run start --prefix auth-api\" \"npm run build --prefix finance-api && npm run start --prefix finance-api\" \"npm run build --prefix reports-and-analysis-api && npm run start --prefix reports-and-analysis-api\" \"npm run build --prefix product-api && npm run start --prefix product-api\"",
     "build": "tsc"
   },
   "author": "Hyago",
