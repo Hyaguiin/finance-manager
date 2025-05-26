@@ -1,15 +1,27 @@
 // register.component.ts
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CommonModule, ],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    CommonModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
+  ],
+  providers: [provideNgxMask()],
   templateUrl: './register.component.html', // <-- templateUrl obrigatório
-  styleUrls: ['./register.component.scss']
-
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -21,7 +33,7 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       cpf: ['', [Validators.required]],
       cnpj: [''],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -36,7 +48,7 @@ export class RegisterComponent {
   }
 
   private markAllAsTouched() {
-    Object.values(this.registerForm.controls).forEach(control => {
+    Object.values(this.registerForm.controls).forEach((control) => {
       control.markAsTouched();
     });
   }
