@@ -1,78 +1,79 @@
 .sidebar {
-    width: 240px;
-    background-color: #2e7d32;
-    color: white;
-    padding: 2rem 1.5rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
+  width: 240px;
+  background-color: #fcfcfc;
+  color: white;
+ border: 1px solid rgba(0, 0, 0, 0.4);
 
-.sidebar-nav{
+
+  padding: 2rem 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-nav {
   position: relative;
   top: 5rem;
 }
 
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    padding-top: 12rem; 
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-top: 12rem;
+}
+
+.sidebar li {
+  margin: 1.2rem 0;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.sidebar a::before {
+  content: "●";
+  font-size: 0.6rem;
+  color: #a5d6a7;
+  transition: color 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e8f5e9;
+}
+
+.sidebar a.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+}
+
+.sidebar a.active::before {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    transition: left 0.3s ease;
   }
-  
-  .sidebar li {
-    margin: 1.2rem 0;
+
+  .sidebar.active {
+    left: 0;
+    z-index: 1000;
   }
-  
-  .sidebar a {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    position: relative;
-  }
-  
-  .sidebar a::before {
-    content: '●';
-    font-size: 0.6rem;
-    color: #a5d6a7;
-    transition: color 0.3s;
-  }
-  
-  .sidebar a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #e8f5e9;
-  }
-  
-  .sidebar a.active {
-    background-color: rgba(255, 255, 255, 0.15);
-    font-weight: 600;
-  }
-  
-  .sidebar a.active::before {
-    color: #ffffff;
-  }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      position: fixed;
-      left: -260px; 
-      transition: left 0.3s ease;
-    }
-  
-    .sidebar.active {
-      left: 0; 
-      z-index: 1000; 
-    }
-  }
-  
+}
