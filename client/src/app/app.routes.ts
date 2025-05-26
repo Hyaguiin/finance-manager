@@ -6,7 +6,6 @@ import { AnalisesComponent } from './dashboard/analises/analises.component';
 import { TransacoesComponent } from './dashboard/transacoes/transacoes.component';
 
 export const routes: Routes = [
-  // Agrupamento das rotas de autenticação
   {
     path: 'auth',
     children: [
@@ -16,7 +15,6 @@ export const routes: Routes = [
     ]
   },
 
-  // Rotas protegidas do dashboard
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -24,13 +22,10 @@ export const routes: Routes = [
       { path: '', redirectTo: 'analises', pathMatch: 'full' }, // rota padrão
       { path: 'analises', component: AnalisesComponent },
       { path: 'transacoes', component: TransacoesComponent },
-      // futuras rotas filhas vão aqui
     ]
   },
 
-  // Redirecionamento base
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
 
-  // Wildcard para páginas não encontradas
   { path: '**', redirectTo: 'auth/login' }
 ];
