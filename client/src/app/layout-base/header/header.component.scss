@@ -76,6 +76,21 @@ html, body {
   font-weight: 600;
   color: #c8e6c9;
 }
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+  }
+}
 
 @media screen and (max-width: 400px) {
   .header {
@@ -94,3 +109,4 @@ html, body {
     font-size: 1.5rem;
   }
 }
+

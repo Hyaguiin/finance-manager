@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../layout-base/header/header.component';
 import { SidebarComponent } from '../layout-base/sidebar/sidebar.component';
 import { FooterComponent } from '../layout-base/footer/footer.component';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -17,4 +18,11 @@ import { FooterComponent } from '../layout-base/footer/footer.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  isSidebarOpen = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    console.log('Sidebar open?', this.isSidebarOpen); 
+  }
+}

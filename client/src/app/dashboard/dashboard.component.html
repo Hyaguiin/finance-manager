@@ -1,7 +1,12 @@
 <app-header></app-header>
 
 <div class="dashboard-container">
-  <app-sidebar></app-sidebar>
+  <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+
+  <app-sidebar [class.active]="isSidebarOpen">
+    <button class="close-btn" (click)="toggleSidebar()">✕</button>
+  </app-sidebar>
+
   <div class="main-content">
     <router-outlet></router-outlet>
   </div>

@@ -1,8 +1,16 @@
 <aside class="sidebar">
-    <nav class="sidebar-nav">
-      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
-      <a routerLink="/dashboard/analises" routerLinkActive="active">Análises</a>
-      <a routerLink="/dashboard/transacoes" routerLinkActive="active">Transações</a>
-    </nav>
-  </aside>
-  
+  <nav class="sidebar-nav">
+    <div class="sidebar-group">
+      <h3 class="sidebar-heading">Geral</h3>
+      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">📊 Dashboard</a>
+      <a routerLink="/dashboard/analises" routerLinkActive="active">📈 Análises</a>
+    </div>
+
+    <div class="sidebar-group">
+      <h3 class="sidebar-heading">Financeiro</h3>
+      <a routerLink="/dashboard/transacoes" routerLinkActive="active">💸 Transações</a>
+      <a routerLink="/dashboard/produtos" routerLinkActive="active">🛍️ Produtos</a>
+      <a routerLink="/dashboard/servicos" routerLinkActive="active">🛠️ Serviços</a>
+    </div>
+  </nav>
+</aside>
