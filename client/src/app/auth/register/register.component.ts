@@ -1,55 +1,62 @@
-// register.component.ts
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService, RegisterData } from '../../services/auth.service';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
+  selector: 'app-register',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    RouterLink,
     CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
+    ReactiveFormsModule,
+    RouterModule,
   ],
-  providers: [provideNgxMask()],
-  templateUrl: './register.component.html', // <-- templateUrl obrigatório
-  styleUrls: ['./register.component.scss'],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
-  registerForm: FormGroup;
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       second_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      cpf: ['', [Validators.required]],
+      cpf: ['', Validators.required],
       cnpj: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log('Registro válido:', this.registerForm.value);
-      // this.router.navigate(['/login']); // Redirecionar após cadastro
-    } else {
-      console.log('Formulário inválido', this.registerForm.errors);
-      this.markAllAsTouched();
-    }
-  }
+  onSubmit(): void {
+    if (this.registerForm.invalid) return;
 
-  private markAllAsTouched() {
-    Object.values(this.registerForm.controls).forEach((control) => {
-      control.markAsTouched();
+    const formValue = this.registerForm.value;
+
+    const registerData: RegisterData = {
+      name: `${formValue.name} ${formValue.second_name}`,
+      email: formValue.email,
+      cpf: formValue.cpf,
+      cnpj: formValue.cnpj || undefined,
+      password: formValue.password,
+      second_name: formValue.second_name,
+    };
+
+    this.authService.register(registerData).subscribe({
+      next: (res) => {
+        console.log('Cadastro bem-sucedido', res);
+        this.router.navigate(['/auth/login']);
+      },
+      error: (err) => {
+        console.error('Erro no cadastro:', err);
+      },
     });
   }
 }

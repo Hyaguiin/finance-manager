@@ -10,7 +10,7 @@ const PORT = Number(process.env['PORT']) || 3000;
 app.use(express.json());
 
 let allDomains = [
-    "https://hoppscotch.io",
+    "https://hoppscotch.io","http://localhost:4200"
 ];
 
 const corsOptions = {
