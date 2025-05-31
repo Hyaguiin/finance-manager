@@ -13,9 +13,14 @@ let allDomains = [
     "https://hoppscotch.io","http://localhost:4200"
 ];
 
+const allDomainsNormalized = allDomains.map(o => o.toLowerCase().replace(/\/$/, ''));
+
 const corsOptions = {
   origin: function (origin: any, callback: any) {
-    if (allDomains.indexOf(origin) !== -1 || !origin) {
+    if (!origin) return callback(null, true); // Requisições sem origin, tipo Postman ou curl
+
+    const originNormalized = origin.toLowerCase().replace(/\/$/, '');
+    if (allDomainsNormalized.indexOf(originNormalized) !== -1) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
