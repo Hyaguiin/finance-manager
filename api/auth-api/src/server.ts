@@ -17,7 +17,7 @@ const allDomainsNormalized = allDomains.map(o => o.toLowerCase().replace(/\/$/, 
 
 const corsOptions = {
   origin: function (origin: any, callback: any) {
-    if (!origin) return callback(null, true); // Requisições sem origin, tipo Postman ou curl
+    if (!origin) return callback(null, true);
 
     const originNormalized = origin.toLowerCase().replace(/\/$/, '');
     if (allDomainsNormalized.indexOf(originNormalized) !== -1) {
@@ -25,8 +25,10 @@ const corsOptions = {
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  }
+  },
+  credentials: true // <--- ESSENCIAL se usar cookies ou `withCredentials`
 };
+
 
 app.use(cors(corsOptions));
 app.use('/api/auth', authRoutes);
