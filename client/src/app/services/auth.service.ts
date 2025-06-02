@@ -26,9 +26,8 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(data: RegisterData): Observable<any> {
-    return this.http.post(`${this.API_URL}/register`, data, {
-      withCredentials: true, // <- Envia cookies junto
-    });
+    return this.http.post(`${this.API_URL}/register`, data);
+
   }
 
   login(data: LoginData): Observable<any> {

@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "dist/client/browser/**",
+      "src": "dist/client/**",
       "use": "@vercel/static"
     }
   ],
