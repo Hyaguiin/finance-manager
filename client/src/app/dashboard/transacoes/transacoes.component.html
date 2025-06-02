@@ -1,1 +1,7 @@
-<p>transacoes works!</p>
+<p>Transações:</p>
+
+<ul>
+  <li *ngFor="let t of transactions">
+    {{ t.description }} - R$ {{ t.amount }} ({{ t.type }}) - {{ t.date | date:'short' }}
+  </li>
+</ul>

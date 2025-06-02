@@ -11,9 +11,12 @@ const ProductRoutes_1 = __importDefault(require("./routes/ProductRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env['PORT'] || 3000;
 app.use(express_1.default.json());
+console.log('CORS_ALLOWED_DOMAINS:', process.env['CORS_ALLOWED_DOMAINS']); // <-- aqui
 const allowedDomains = process.env['CORS_ALLOWED_DOMAINS']?.split(',') || [];
+console.log('allowedDomains array:', allowedDomains); // <-- aqui
 const corsOptions = {
     origin: function (origin, callback) {
+        console.log('Request origin:', origin);
         if (allowedDomains.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         }
@@ -23,7 +26,9 @@ const corsOptions = {
     }
 };
 app.use((0, cors_1.default)(corsOptions));
-app.use('/product', ProductRoutes_1.default);
+//app.options('*', cors(corsOptions));
+app.use('/api/product', ProductRoutes_1.default);
+console.log('Registering product routes on path: /product');
 app.get('/', (req, res) => {
     try {
         res.send(`Servidor Rodando!!`);

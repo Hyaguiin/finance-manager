@@ -23,6 +23,7 @@ const corsOptions = {
     }
 };
 app.use((0, cors_1.default)(corsOptions));
+app.options('*', (0, cors_1.default)(corsOptions));
 app.use('/transaction-analyse', TransactionAnalysisRoute_1.default);
 app.get('/', (req, res) => {
     try {

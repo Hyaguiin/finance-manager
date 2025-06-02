@@ -21,6 +21,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
 app.use('/transaction', financeRoutes);
 
 app.get('/', (req, res)=>{

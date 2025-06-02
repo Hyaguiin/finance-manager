@@ -8,10 +8,15 @@ const app = express();
 const PORT = process.env['PORT'] || 3000;
 app.use(express.json());
 
+console.log('CORS_ALLOWED_DOMAINS:', process.env['CORS_ALLOWED_DOMAINS']); // <-- aqui
+
 const allowedDomains = process.env['CORS_ALLOWED_DOMAINS']?.split(',') || [];
+
+console.log('allowedDomains array:', allowedDomains); // <-- aqui
 
 const corsOptions = {
   origin: function (origin: any, callback: any) {
+    console.log('Request origin:', origin); 
     if (allowedDomains.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
@@ -21,17 +26,21 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use('/product', productRoutes);
+//app.options('*', cors(corsOptions));
 
-app.get('/', (req, res)=>{
-  try{
+app.use('/api/product', productRoutes);
+console.log('Registering product routes on path: /product');
+
+
+app.get('/', (req, res) => {
+  try {
     res.send(`Servidor Rodando!!`)
-  }catch(err){
-    if(err instanceof Error){
+  } catch (err) {
+    if (err instanceof Error) {
       throw err;
     }
   }
-}) 
+})
 
 app.listen(PORT, async () => {
   try {

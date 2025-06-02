@@ -21,7 +21,7 @@ export interface LoginData {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_URL = `${environment.apiUrl}/api/auth`;
+  private readonly API_URL = `${environment.authApiUrl}/api/auth`;
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +32,7 @@ export class AuthService {
 
   login(data: LoginData): Observable<any> {
     return this.http.post(`${this.API_URL}/login`, data, {
-      withCredentials: true, // <- Também aqui, se o login usa cookies
+      withCredentials: true, 
     });
   }
 }

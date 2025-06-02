@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import ProductModel from "../models/ProductModel";
 
-export const authorizeProductOwner = async(
+export const authorizeProductOwner = async (
   req: Request,
   res: Response,
   next: NextFunction
-):Promise<void>=> {
+): Promise<void> => {
   try {
     const productId = req.params.id;
 
@@ -19,6 +19,6 @@ export const authorizeProductOwner = async(
 
     next();
   } catch (error) {
-     res.status(500).json({ message: "Erro interno no servidor" });
+    res.status(500).json({ message: "Erro interno no servidor" });
   }
-}
+};
