@@ -30,6 +30,7 @@ const corsOptions = {
     credentials: true // <--- ESSENCIAL se usar cookies ou `withCredentials`
 };
 app.use((0, cors_1.default)(corsOptions));
+app.options('*', (0, cors_1.default)(corsOptions)); // Trata requisições OPTIONS manualmente
 app.use('/api/auth', AuthRoutes_1.default);
 app.get('/', (req, res) => {
     try {
