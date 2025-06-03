@@ -18,7 +18,7 @@ class TransactionController {
                 // Retorna sucesso
                 res.status(201).json({
                     success: true,
-                    message: 'Transaction created successfully',
+                    message: "Transaction created successfully",
                     transaction,
                 });
             }
@@ -27,24 +27,24 @@ class TransactionController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
         this.getAllTransactions = async (req, res) => {
             try {
-                console.log('Controller: Chamando getAllTransactions');
+                console.log("Controller: Chamando getAllTransactions");
                 const transactions = await this.transactionService.getAllTransactions();
-                console.log('Controller: Transações recuperadas', transactions);
+                console.log("Controller: Transações recuperadas", transactions);
                 res.status(200).json(transactions);
             }
             catch (err) {
-                console.error('Erro no Controller:', err);
+                console.error("Erro no Controller:", err);
                 if (err instanceof Error) {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
@@ -59,15 +59,15 @@ class TransactionController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
         this.getTransactionsByUserId = async (req, res) => {
             try {
-                const { userId } = req.query;
-                if (!userId || typeof userId !== 'string') {
-                    res.status(400).json({ message: 'userId is required as query param' });
+                const { userId } = req.params;
+                if (!userId || typeof userId !== "string") {
+                    res.status(400).json({ message: "userId is required as query param" });
                     return;
                 }
                 const transactions = await this.transactionService.getTransactionsByUserId(userId);
@@ -78,7 +78,7 @@ class TransactionController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
