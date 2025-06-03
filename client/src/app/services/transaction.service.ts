@@ -27,6 +27,10 @@ export class TransactionService {
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(`${this.apiURL}/transaction`);
   }
+  getTransactionsByUser(userId: string): Observable<Transaction[]> {
+  return this.http.get<Transaction[]>(`${this.apiURL}/transaction?userId=${userId}`);
+};
+
 
   createTransaction(transaction: Partial<Transaction>): Observable<Transaction> {
     return this.http.post<Transaction>(`${this.apiURL}/transaction`, transaction);

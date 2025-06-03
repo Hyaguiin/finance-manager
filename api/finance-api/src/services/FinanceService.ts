@@ -66,4 +66,27 @@ export class TransactionService {  // Exportação nomeada
             }
         }
     }
+    getTransactionsByUserId = async (userId: string) => {
+  try {
+    if (!userId) {
+      throw new ErrorMissingContent();
+    }
+
+    const transactions = await TransactionModel.findAll({ where: { userId } });
+
+    if (transactions.length === 0) {
+      throw new NotFound();
+    }
+
+    return transactions;
+  } catch (err) {
+    console.error("Error in getTransactionsByUserId:", err);
+    if (err instanceof Error) {
+      throw err;
+    } else {
+      throw new UnknowError(`Unexpected error in getTransactionsByUserId: ${JSON.stringify(err)}`);
+    }
+  }
+};
+
 }

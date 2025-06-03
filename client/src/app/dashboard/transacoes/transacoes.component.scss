@@ -1,76 +1,106 @@
 .transactions-container {
-  max-width: 600px;
+  max-width: 1200px; /* container maior para grid 4 colunas */
   margin: 2rem auto;
+  padding: 0 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: #000; /* preto padrão */
 
   h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
+    margin-bottom: 2rem;
+    color: #000;
   }
 
   ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
-      background-color: #f9f9f9;
-      transition: transform 0.2s ease;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    gap: 1.5rem;
+  }
 
-      &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 10px rgb(0 0 0 / 0.15);
-      }
+  ul li {
+    background-color: #fff; /* branco */
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgb(0 0 0 / 0.12);
+    padding: 1.5rem 1.8rem;
+    display: flex;
+    flex-direction: column; /* empilhar textos */
+    justify-content: space-between;
+    color: #000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-      .desc {
-        flex: 3;
-        font-weight: 600;
-      }
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgb(0 0 0 / 0.2);
+    }
 
-      .category {
-        flex: 2;
-        font-size: 0.9rem;
-        color: #7f8c8d;
-        font-style: italic;
-      }
+    .desc {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.7rem;
+      flex-grow: 1;
+    }
 
-      .amount {
-        flex: 1.2;
-        font-weight: 700;
-        text-align: right;
-      }
+    .category {
+      font-style: italic;
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
 
-      .date {
-        flex: 2;
-        font-size: 0.8rem;
-        text-align: right;
-        color: #95a5a6;
-      }
+    .amount {
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-align: right;
+      margin-bottom: 0.4rem;
+    }
 
-      &.credit {
-        border-left: 5px solid #27ae60;
-        color: #27ae60;
-      }
+    .date {
+      font-size: 0.85rem;
+      text-align: right;
+      color: #777;
+    }
 
-      &.debit {
-        border-left: 5px solid #c0392b;
-        color: #c0392b;
-      }
+    &.credit {
+      border-left: 6px solid #000; /* borda preta */
+    }
+
+    &.debit {
+      border-left: 6px solid #000; /* borda preta igual para padrão */
     }
   }
 
   .empty {
     text-align: center;
     font-style: italic;
-    color: #aaa;
-    margin-top: 2rem;
+    color: #555;
+    margin-top: 3rem;
+  }
+}
+
+/* ----------- RESPONSIVIDADE ----------- */
+
+/* Tablets (768px - 1024px): 2 colunas */
+@media (max-width: 1024px) {
+  .transactions-container ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Celulares médios (até 600px): 1 coluna */
+@media (max-width: 600px) {
+  .transactions-container {
+    padding: 0 1rem;
+  }
+
+  .transactions-container ul {
+    grid-template-columns: 1fr;
+  }
+
+  ul li {
+    padding: 1.2rem 1.5rem;
   }
 }

@@ -63,6 +63,25 @@ class TransactionController {
                 }
             }
         };
+        this.getTransactionsByUserId = async (req, res) => {
+            try {
+                const { userId } = req.query; // Pega userId da query string
+                if (!userId || typeof userId !== 'string') {
+                    res.status(400).json({ message: 'userId is required as query param' });
+                    return;
+                }
+                const transactions = await this.transactionService.getTransactionsByUserId(userId);
+                res.status(200).json(transactions);
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ message: `Error: ${err.message}` });
+                }
+                else {
+                    res.status(500).json({ message: 'Unknown error occurred' });
+                }
+            }
+        };
         this.transactionService = new FinanceService_1.TransactionService();
     }
 }

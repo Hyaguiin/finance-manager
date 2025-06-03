@@ -69,6 +69,27 @@ class TransactionService {
                 }
             }
         };
+        this.getTransactionsByUserId = async (userId) => {
+            try {
+                if (!userId) {
+                    throw new ErrorMissingContent_1.ErrorMissingContent();
+                }
+                const transactions = await FinanceModel_1.default.findAll({ where: { userId } });
+                if (transactions.length === 0) {
+                    throw new NotFoundError_1.NotFound();
+                }
+                return transactions;
+            }
+            catch (err) {
+                console.error("Error in getTransactionsByUserId:", err);
+                if (err instanceof Error) {
+                    throw err;
+                }
+                else {
+                    throw new Unkown_1.UnknowError(`Unexpected error in getTransactionsByUserId: ${JSON.stringify(err)}`);
+                }
+            }
+        };
     }
 }
 exports.TransactionService = TransactionService;
