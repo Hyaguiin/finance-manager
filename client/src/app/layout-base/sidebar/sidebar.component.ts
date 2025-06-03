@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
+  @Input() isSidebarOpen = false; // <-- aqui está o input
+
   constructor(
     private authService: AuthService,
     private router: Router
