@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export interface RegisterData {
   id?: string;
@@ -25,7 +26,9 @@ export interface LoginData {
 export class AuthService {
   private readonly API_URL = `${environment.authApiUrl}/api/auth`;
 
-  constructor(private http: HttpClient) {}
+  
+
+constructor(private http: HttpClient, private router: Router) {}
 
   register(data: RegisterData): Observable<any> {
     return this.http.post(`${this.API_URL}/register`, data);
@@ -49,8 +52,11 @@ export class AuthService {
     }
   })
 )
-
-  }
+}
+logout(): void {
+  localStorage.removeItem('user');
+  this.router.navigate(['/login']); 
+}
 
   
   getLoggedUser(): RegisterData | null {

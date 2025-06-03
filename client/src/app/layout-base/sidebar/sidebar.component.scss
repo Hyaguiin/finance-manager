@@ -89,3 +89,36 @@
     z-index: 1000;
   }
 }
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.logout-button::before {
+  content: "●";
+  font-size: 0.6rem;
+  color: #a5d6a7;
+  transition: color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e8f5e9;
+}
+
+.logout-button:hover::before {
+  color: #ffffff;
+}
