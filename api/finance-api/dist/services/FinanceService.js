@@ -75,9 +75,6 @@ class TransactionService {
                     throw new ErrorMissingContent_1.ErrorMissingContent();
                 }
                 const transactions = await FinanceModel_1.default.findAll({ where: { userId } });
-                if (transactions.length === 0) {
-                    throw new NotFoundError_1.NotFound();
-                }
                 return transactions;
             }
             catch (err) {

@@ -73,11 +73,6 @@ export class TransactionService {  // Exportação nomeada
     }
 
     const transactions = await TransactionModel.findAll({ where: { userId } });
-
-    if (transactions.length === 0) {
-      throw new NotFound();
-    }
-
     return transactions;
   } catch (err) {
     console.error("Error in getTransactionsByUserId:", err);
@@ -88,5 +83,6 @@ export class TransactionService {  // Exportação nomeada
     }
   }
 };
+
 
 }
