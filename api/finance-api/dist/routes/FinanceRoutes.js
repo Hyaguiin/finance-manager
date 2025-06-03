@@ -9,7 +9,7 @@ const FinanceMiddleware_1 = require("../middleware/FinanceMiddleware");
 const router = express_1.default.Router();
 const transactionController = new FinanceController_1.TransactionController();
 router.post('/', FinanceMiddleware_1.transactionMiddleware, transactionController.createTransaction);
-router.get('/', transactionController.getAllTransactions);
 router.get('/user/:userId', transactionController.getTransactionsByUserId);
 router.get('/:id', transactionController.getTransactionById);
+router.get('/', transactionController.getAllTransactions);
 exports.default = router;
