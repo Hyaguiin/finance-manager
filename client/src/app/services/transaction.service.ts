@@ -16,10 +16,9 @@ export interface Transaction {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionService {
-
   private apiURL = environment.financeApiUrl;
 
   constructor(private http: HttpClient) {}
@@ -28,16 +27,28 @@ export class TransactionService {
     return this.http.get<Transaction[]>(`${this.apiURL}/transaction`);
   }
   getTransactionsByUser(userId: string): Observable<Transaction[]> {
-  return this.http.get<Transaction[]>(`${this.apiURL}/transaction?userId=${userId}`);
-};
-
-
-  createTransaction(transaction: Partial<Transaction>): Observable<Transaction> {
-    return this.http.post<Transaction>(`${this.apiURL}/transaction`, transaction);
+    return this.http.get<Transaction[]>(
+      `${this.apiURL}/transaction/user?userId=${userId}`
+    );
   }
 
-  updateTransaction(id: string, transaction: Partial<Transaction>): Observable<Transaction> {
-    return this.http.put<Transaction>(`${this.apiURL}/transaction/${id}`, transaction);
+  createTransaction(
+    transaction: Partial<Transaction>
+  ): Observable<Transaction> {
+    return this.http.post<Transaction>(
+      `${this.apiURL}/transaction`,
+      transaction
+    );
+  }
+
+  updateTransaction(
+    id: string,
+    transaction: Partial<Transaction>
+  ): Observable<Transaction> {
+    return this.http.put<Transaction>(
+      `${this.apiURL}/transaction/${id}`,
+      transaction
+    );
   }
 
   deleteTransaction(id: string): Observable<void> {

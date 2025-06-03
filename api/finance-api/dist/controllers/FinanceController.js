@@ -65,7 +65,7 @@ class TransactionController {
         };
         this.getTransactionsByUserId = async (req, res) => {
             try {
-                const { userId } = req.query; // Pega userId da query string
+                const { userId } = req.query;
                 if (!userId || typeof userId !== 'string') {
                     res.status(400).json({ message: 'userId is required as query param' });
                     return;

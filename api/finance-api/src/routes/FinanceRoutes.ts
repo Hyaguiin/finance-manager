@@ -8,8 +8,9 @@ const transactionController = new TransactionController();
 
 router.post('/', transactionMiddleware, transactionController.createTransaction);
 router.get('/', transactionController.getAllTransactions);
-router.get('/:id', transactionController.getTransactionById);
 router.get('/user/:userId', transactionController.getTransactionsByUserId);
+router.get('/:id', transactionController.getTransactionById);
+
 
 
 export default router;
