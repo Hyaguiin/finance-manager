@@ -6,8 +6,9 @@ const router: Router = express.Router();
 const transactionController = new TransactionController();
 
 router.post('/', transactionMiddleware, transactionController.createTransaction);
+
 router.get('/user/:userId', transactionController.getTransactionsByUserId);
-router.get('/:id', transactionController.getTransactionById);
+
 router.get('/', transactionController.getAllTransactions);
 
 export default router;
