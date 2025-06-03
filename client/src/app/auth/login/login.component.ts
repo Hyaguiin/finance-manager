@@ -35,15 +35,22 @@ export class LoginComponent implements OnInit {
 
     const loginData: LoginData = this.loginForm.value;
 
-    this.authService.login(loginData).subscribe({
-      next: (res) => {
-        console.log('Login bem-sucedido', res);
-        localStorage.setItem('token', res.token);
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        console.error('Erro no login:', err);
-      },
-    });
+ this.authService.login(loginData).subscribe({
+  next: (response) => {
+    console.log('Login response:', response);
+    const user = this.authService.getLoggedUser();
+    console.log('Usuário salvo:', user);
+    if (user && user.id) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      console.error('Usuário não salvo corretamente no localStorage');
+    }
+  },
+  error: (err) => {
+    console.error('Login error', err);
+  }
+});
+
+
   }
 }

@@ -1,0 +1,130 @@
+.transacao-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fefefe;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+  color: #333;
+}
+
+.transacao-form-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+.transacao-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.transacao-form-container label {
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  color: #000000;
+}
+
+.transacao-form-container input[type="text"],
+.transacao-form-container input[type="number"],
+.transacao-form-container input[type="datetime-local"],
+.transacao-form-container select {
+  margin-top: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.transacao-form-container input[type="text"]:focus,
+.transacao-form-container input[type="number"]:focus,
+.transacao-form-container input[type="datetime-local"]:focus,
+.transacao-form-container select:focus {
+  border-color: #000000;
+  outline: none;
+}
+
+.transacao-form-container button[type="submit"] {
+  padding: 0.8rem 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.transacao-form-container button[type="submit"]:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.transacao-form-container button[type="submit"]:not(:disabled):hover {
+  background-color: #1c5980;
+}
+
+.transacao-form-container .error {
+  color: #c0392b;
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-top: -0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* -------- RESPONSIVIDADE -------- */
+
+/* Telas pequenas - iPhone SE, 320px */
+@media (max-width: 375px) {
+  .transacao-form-container {
+    margin: 1rem 1rem;
+    padding: 1rem 1rem;
+    max-width: 100%;
+  }
+
+  .transacao-form-container label {
+    font-size: 0.95rem;
+  }
+
+  .transacao-form-container input[type="text"],
+  .transacao-form-container input[type="number"],
+  .transacao-form-container input[type="datetime-local"],
+  .transacao-form-container select {
+    font-size: 0.9rem;
+  }
+
+  .transacao-form-container button[type="submit"] {
+    font-size: 1rem;
+    padding: 0.7rem 0.8rem;
+  }
+}
+
+/* iPads e telas médias (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .transacao-form-container {
+    max-width: 85%;
+    padding: 2rem 2rem;
+  }
+
+  .transacao-form-container label {
+    font-size: 1.1rem;
+  }
+
+  .transacao-form-container input[type="text"],
+  .transacao-form-container input[type="number"],
+  .transacao-form-container input[type="datetime-local"],
+  .transacao-form-container select {
+    font-size: 1.05rem;
+  }
+
+  .transacao-form-container button[type="submit"] {
+    font-size: 1.15rem;
+    padding: 0.85rem 1rem;
+  }
+}

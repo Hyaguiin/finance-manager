@@ -6,6 +6,7 @@ import { AnalisesComponent } from './dashboard/analises/analises.component';
 import { TransacoesComponent } from './dashboard/transacoes/transacoes.component';
 import { ProductsComponent } from './dashboard/products/products.component';
 import { ServicesComponent } from './dashboard/services/services.component';
+import { TransacoesCreateComponent } from './dashboard/transacoes-create/transacoes-create.component';
 
 export const routes: Routes = [
   {
@@ -21,9 +22,10 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     children: [
-      { path: '', redirectTo: 'analises', pathMatch: 'full' }, // rota padrão
+      { path: '', redirectTo: 'analises', pathMatch: 'full' }, 
       { path: 'analises', component: AnalisesComponent },
       { path: 'transacoes', component: TransacoesComponent },
+      { path: 'transacoes/create', component: TransacoesCreateComponent },
       { path: 'produtos', component: ProductsComponent },
       { path: 'servicos', component: ServicesComponent }
     ]

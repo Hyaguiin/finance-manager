@@ -27,4 +27,16 @@ export class TransactionService {
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(`${this.apiURL}/transaction`);
   }
+
+  createTransaction(transaction: Partial<Transaction>): Observable<Transaction> {
+    return this.http.post<Transaction>(`${this.apiURL}/transaction`, transaction);
+  }
+
+  updateTransaction(id: string, transaction: Partial<Transaction>): Observable<Transaction> {
+    return this.http.put<Transaction>(`${this.apiURL}/transaction/${id}`, transaction);
+  }
+
+  deleteTransaction(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/transaction/${id}`);
+  }
 }

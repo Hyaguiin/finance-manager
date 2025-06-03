@@ -1,0 +1,48 @@
+<section class="transacao-form-container">
+  <h2>Nova Transação</h2>
+
+  <form [formGroup]="transacaoForm" (ngSubmit)="onSubmit()">
+    <label>
+      Descrição:
+      <input type="text" formControlName="description" />
+    </label>
+    <div *ngIf="transacaoForm.get('description')?.invalid && transacaoForm.get('description')?.touched">
+      Campo obrigatório.
+    </div>
+
+    <label>
+      Valor:
+      <input type="number" formControlName="amount" />
+    </label>
+    <div *ngIf="transacaoForm.get('amount')?.invalid && transacaoForm.get('amount')?.touched">
+      Valor mínimo de R$ 0,01.
+    </div>
+
+    <label>
+      Tipo:
+      <select formControlName="type">
+        <option value="credit">Crédito</option>
+        <option value="debit">Débito</option>
+      </select>
+    </label>
+
+    <label>
+      Categoria:
+      <input type="text" formControlName="category" />
+    </label>
+    <div *ngIf="transacaoForm.get('category')?.invalid && transacaoForm.get('category')?.touched">
+      Campo obrigatório.
+    </div>
+
+    <label>
+      Data:
+      <input type="datetime-local" formControlName="date" />
+    </label>
+
+    <button type="submit" [disabled]="transacaoForm.invalid || isSubmitting">
+      {{ isSubmitting ? 'Salvando...' : 'Salvar Transação' }}
+    </button>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </form>
+</section>

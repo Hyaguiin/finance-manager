@@ -1,0 +1,76 @@
+.transactions-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+      background-color: #f9f9f9;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 10px rgb(0 0 0 / 0.15);
+      }
+
+      .desc {
+        flex: 3;
+        font-weight: 600;
+      }
+
+      .category {
+        flex: 2;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        font-style: italic;
+      }
+
+      .amount {
+        flex: 1.2;
+        font-weight: 700;
+        text-align: right;
+      }
+
+      .date {
+        flex: 2;
+        font-size: 0.8rem;
+        text-align: right;
+        color: #95a5a6;
+      }
+
+      &.credit {
+        border-left: 5px solid #27ae60;
+        color: #27ae60;
+      }
+
+      &.debit {
+        border-left: 5px solid #c0392b;
+        color: #c0392b;
+      }
+    }
+  }
+
+  .empty {
+    text-align: center;
+    font-style: italic;
+    color: #aaa;
+    margin-top: 2rem;
+  }
+}

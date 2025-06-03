@@ -1,7 +1,16 @@
-<p>Transações:</p>
+<section class="transactions-container">
+  <h2>Transações Recentes</h2>
 
-<ul>
-  <li *ngFor="let t of transactions">
-    {{ t.description }} - R$ {{ t.amount }} ({{ t.type }}) - {{ t.date | date:'short' }}
-  </li>
-</ul>
+  <ul *ngIf="transactions.length; else noData">
+    <li *ngFor="let t of transactions" [ngClass]="t.type.toLowerCase()">
+      <div class="desc">{{ t.description }}</div>
+      <div class="category">{{ t.category }}</div>
+      <div class="amount">R$ {{ t.amount | number:'1.2-2' }}</div>
+      <div class="date">{{ t.date | date: 'dd/MM/yyyy HH:mm' }}</div>
+    </li>
+  </ul>
+
+  <ng-template #noData>
+    <p class="empty">Carregando...</p>
+  </ng-template>
+</section>
