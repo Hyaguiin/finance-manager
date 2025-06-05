@@ -66,6 +66,7 @@ logout(): void {
     }
     return null;
   }
+  
 
  getUserId(): string | null {
   const user = this.getLoggedUser();
