@@ -2,16 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { TransactionAnalyse } from '../interfaces/financeInterface';
 
-export interface TransactionAnalysis {
-  id: string;
-  totalAmount: number;
-  totalCredit: number;
-  totalDebit: number;
-  totalByCategory: Record<string, number>;
-  generatedAt: string;
-  transactionId: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +14,15 @@ export class ReportsAnalysisService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<TransactionAnalysis[]> {
-    return this.http.get<TransactionAnalysis[]>(this.apiUrl);
+  getAll(): Observable<TransactionAnalyse[]> {
+    return this.http.get<TransactionAnalyse[]>(this.apiUrl);
   }
 
-  getById(id: string): Observable<TransactionAnalysis> {
-    return this.http.get<TransactionAnalysis>(`${this.apiUrl}/${id}`);
+  getById(id: string): Observable<TransactionAnalyse> {
+    return this.http.get<TransactionAnalyse>(`${this.apiUrl}/${id}`);
   }
 
-  getSummary(analysis: TransactionAnalysis): { creditPercent: number; debitPercent: number } {
+  getSummary(analysis: TransactionAnalyse): { creditPercent: number; debitPercent: number } {
     const total = analysis.totalAmount;
     return {
       creditPercent: (analysis.totalCredit / total) * 100,
@@ -38,7 +30,7 @@ export class ReportsAnalysisService {
     };
   }
 
-  create(analysis: Partial<TransactionAnalysis>): Observable<TransactionAnalysis> {
-    return this.http.post<TransactionAnalysis>(this.apiUrl, analysis);
+  create(analysis: Partial<TransactionAnalyse>): Observable<TransactionAnalyse> {
+    return this.http.post<TransactionAnalyse>(this.apiUrl, analysis);
   }
 }

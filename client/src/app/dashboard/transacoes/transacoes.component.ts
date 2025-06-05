@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Transaction, TransactionService } from '../../services/transaction.service';
+import { TransactionService } from '../../services/transaction.service';
+import { Transaction } from '../../interfaces/financeInterface'
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 

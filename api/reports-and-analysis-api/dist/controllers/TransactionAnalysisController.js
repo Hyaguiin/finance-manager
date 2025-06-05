@@ -10,7 +10,9 @@ class TransactionAnalysisController {
             try {
                 const analysisData = req.body;
                 await this.analysisService.createTransactionAnalysis(analysisData);
-                res.status(201).send({ message: 'Análise de transação criada com sucesso!' });
+                res
+                    .status(201)
+                    .send({ message: "Análise de transação criada com sucesso!" });
             }
             catch (err) {
                 if (err instanceof Error) {
@@ -21,6 +23,18 @@ class TransactionAnalysisController {
         this.getAll = async (req, res) => {
             try {
                 const analyses = await this.analysisService.getAllTransactionAnalyses();
+                res.status(200).json(analyses);
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(500).send({ message: err.message });
+                }
+            }
+        };
+        this.getByUserId = async (req, res) => {
+            try {
+                const { userId } = req.params;
+                const analyses = await this.analysisService.getTransactionAnalysesByUserId(userId);
                 res.status(200).json(analyses);
             }
             catch (err) {
@@ -46,7 +60,9 @@ class TransactionAnalysisController {
                 const { id } = req.params;
                 const updateData = req.body;
                 await this.analysisService.updateTransactionAnalysis(id, updateData);
-                res.status(200).send({ message: 'Análise de transação atualizada com sucesso!' });
+                res
+                    .status(200)
+                    .send({ message: "Análise de transação atualizada com sucesso!" });
             }
             catch (err) {
                 if (err instanceof Error) {
@@ -58,7 +74,9 @@ class TransactionAnalysisController {
             try {
                 const { id } = req.params;
                 await this.analysisService.deleteTransactionAnalysis(id);
-                res.status(200).send({ message: 'Análise de transação deletada com sucesso!' });
+                res
+                    .status(200)
+                    .send({ message: "Análise de transação deletada com sucesso!" });
             }
             catch (err) {
                 if (err instanceof Error) {

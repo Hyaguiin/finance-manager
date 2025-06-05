@@ -1,1 +1,17 @@
-<p>services works!</p>
+<div class="transactions-container">
+  <h2>Lista de Serviços</h2>
+
+  <ul *ngIf="services.length > 0">
+    <li *ngFor="let service of services" class="credit">
+      <div class="desc">{{ service.name }}</div>
+      <div class="category">Serviço</div>
+      <div class="amount">R$ {{ +service.price | number:'1.2-2' }}</div>
+      <div class="date">{{ service.description }}</div>
+      <button (click)="deleteService(service.id!)">🗑️ Excluir</button>
+    </li>
+  </ul>
+
+  <div class="empty" *ngIf="services.length === 0">
+    Nenhum serviço encontrado.
+  </div>
+</div>

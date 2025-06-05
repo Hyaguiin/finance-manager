@@ -11,11 +11,36 @@ class TransactionAnalysisService {
     constructor() {
         this.createTransactionAnalysis = async (analysisData) => {
             try {
-                if (!analysisData.totalAmount || !analysisData.totalCredit || !analysisData.totalDebit ||
-                    !analysisData.totalByCategory || !analysisData.transactionId) {
+                if (!analysisData.totalAmount ||
+                    !analysisData.totalCredit ||
+                    !analysisData.totalDebit ||
+                    !analysisData.totalByCategory ||
+                    !analysisData.transactionId) {
                     throw new ErrorMissingContent_1.ErrorMissingContent();
                 }
                 await TransactionAnalysisModel_1.default.create(analysisData);
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    throw err;
+                }
+                else {
+                    throw new Unkown_1.UnknowError();
+                }
+            }
+        };
+        this.getTransactionAnalysesByUserId = async (userId) => {
+            try {
+                if (!userId) {
+                    throw new ErrorMissingContent_1.ErrorMissingContent();
+                }
+                const analyses = await TransactionAnalysisModel_1.default.findAll({
+                    where: { userId },
+                });
+                if (analyses.length === 0) {
+                    throw new NotFoundError_1.NotFound();
+                }
+                return analyses;
             }
             catch (err) {
                 if (err instanceof Error) {
@@ -48,7 +73,9 @@ class TransactionAnalysisService {
                 if (!id) {
                     throw new ErrorMissingContent_1.ErrorMissingContent();
                 }
-                const analysis = await TransactionAnalysisModel_1.default.findOne({ where: { id } });
+                const analysis = await TransactionAnalysisModel_1.default.findOne({
+                    where: { id },
+                });
                 if (!analysis) {
                     throw new NotFoundError_1.NotFound();
                 }
@@ -65,7 +92,9 @@ class TransactionAnalysisService {
         };
         this.updateTransactionAnalysis = async (id, updateData) => {
             try {
-                const analysis = await TransactionAnalysisModel_1.default.findOne({ where: { id } });
+                const analysis = await TransactionAnalysisModel_1.default.findOne({
+                    where: { id },
+                });
                 if (!analysis) {
                     throw new NotFoundError_1.NotFound();
                 }
@@ -82,7 +111,9 @@ class TransactionAnalysisService {
         };
         this.deleteTransactionAnalysis = async (id) => {
             try {
-                const analysis = await TransactionAnalysisModel_1.default.findOne({ where: { id } });
+                const analysis = await TransactionAnalysisModel_1.default.findOne({
+                    where: { id },
+                });
                 if (!analysis) {
                     throw new NotFoundError_1.NotFound();
                 }

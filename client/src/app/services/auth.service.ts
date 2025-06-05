@@ -4,21 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { RegisterData, LoginData } from '../interfaces/AuthInterface';
 
-export interface RegisterData {
-  id?: string;
-  name: string;
-  second_name: string;
-  email: string;
-  cpf: string;
-  cnpj?: string;
-  password: string;
-}
-
-export interface LoginData {
-  email: string;
-  password: string;
-}
 
 @Injectable({
   providedIn: 'root',

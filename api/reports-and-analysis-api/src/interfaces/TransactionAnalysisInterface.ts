@@ -8,6 +8,7 @@ export interface TransactionAnalysisAttributes {
     totalByCategory: Record<string, number>; // Ex: { 'food': 100, 'transport': 50 }
     generatedAt: Date;
     transactionId: string; 
+    userId: string
 }
 
 export interface TransactionAnalysisCreationAttributes extends Optional<TransactionAnalysisAttributes, 'id' | 'generatedAt'> {}

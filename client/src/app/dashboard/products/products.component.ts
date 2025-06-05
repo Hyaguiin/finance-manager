@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService, Product } from '../../services/product-services.service';
+import { ProductService } from '../../services/product-services.service';
 import { AuthService } from '../../services/auth.service';
+import { Product } from '../../interfaces/productInterface';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products',
-  imports:[CommonModule],
+  imports: [CommonModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
@@ -25,7 +26,11 @@ export class ProductsComponent implements OnInit {
       return;
     }
 
-    this.productService.getProductsByUser(userId).subscribe({
+    this.loadProducts(userId);
+  }
+
+  loadProducts(userId: string) {
+    this.productService.getByType('PRODUCT', userId).subscribe({
       next: (data) => this.products = data,
       error: (err) => console.error('Erro ao carregar produtos', err),
     });
@@ -36,7 +41,7 @@ export class ProductsComponent implements OnInit {
       this.productService.delete(id).subscribe(() => {
         const userId = this.authService.getUserId();
         if (userId) {
-          this.productService.getProductsByUser(userId).subscribe(data => this.products = data);
+          this.loadProducts(userId);
         }
       });
     }

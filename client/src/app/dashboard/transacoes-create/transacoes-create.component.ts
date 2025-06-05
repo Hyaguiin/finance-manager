@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TransactionService, Transaction } from '../../services/transaction.service';
+import { TransactionService } from '../../services/transaction.service';
+import { Transaction } from '../../interfaces/financeInterface';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

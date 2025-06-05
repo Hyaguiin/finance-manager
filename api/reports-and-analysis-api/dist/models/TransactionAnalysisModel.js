@@ -17,38 +17,47 @@ TransactionAnalysisModel.init({
     totalAmount: {
         type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
-        field: 'totalamount'
+        field: "totalamount",
     },
     totalCredit: {
         type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
-        field: 'totalcredit'
+        field: "totalcredit",
     },
     totalDebit: {
         type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
-        field: 'totaldebit'
+        field: "totaldebit",
     },
     totalByCategory: {
         type: sequelize_1.DataTypes.JSONB,
         allowNull: false,
-        field: 'totalbycategory'
+        field: "totalbycategory",
     },
     generatedAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         defaultValue: sequelize_1.DataTypes.NOW,
-        field: 'generatedat'
+        field: "generatedat",
     },
     transactionId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'transactions',
-            key: 'id',
+            model: "transactions",
+            key: "id",
         },
-        field: 'transactionid'
-    }
+        field: "transactionid",
+    },
+    userId: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        field: "user_id",
+        references: {
+            model: "users",
+            key: "id",
+        },
+    },
 }, {
     sequelize: database_1.default,
     tableName: "transaction_analyses",

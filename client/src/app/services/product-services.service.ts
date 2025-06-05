@@ -3,17 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; // import HttpHe
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service'; // importe AuthService
+import { Product } from '../interfaces/productInterface';
 
-export interface Product {
-  id?: string;
-  name: string;
-  type: 'PRODUCT' | 'SERVICE';
-  price: number;
-  description: string;
-  userId: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
 
 @Injectable({
   providedIn: 'root'

@@ -2,18 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Transaction } from '../interfaces/financeInterface';
 
-export interface Transaction {
-  id: string;
-  amount: number;
-  type: string;
-  description: string;
-  category: string;
-  date: string;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 @Injectable({
   providedIn: 'root',

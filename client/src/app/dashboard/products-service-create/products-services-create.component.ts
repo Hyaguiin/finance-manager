@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductService, Product } from '../../services/product-services.service';
+import { ProductService } from '../../services/product-services.service';
+import { Product } from '../../interfaces/productInterface';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
