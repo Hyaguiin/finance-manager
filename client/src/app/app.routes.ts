@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AnalisesComponent } from './dashboard/analises/analises.component';
 import { TransacoesComponent } from './dashboard/transacoes/transacoes.component';
 import { ProductsComponent } from './dashboard/products/products.component';
-import { ServicesComponent } from './dashboard/services/services.component';
+import { ServicesComponent } from './dashboard/services-component/services.component';
 import { TransacoesCreateComponent } from './dashboard/transacoes-create/transacoes-create.component';
 
 export const routes: Routes = [

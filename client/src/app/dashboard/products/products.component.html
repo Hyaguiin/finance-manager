@@ -1,1 +1,17 @@
-<p>products works!</p>
+<div class="transactions-container">
+  <h2>Lista de Produtos e Serviços</h2>
+
+  <ul *ngIf="products.length > 0">
+    <li *ngFor="let product of products" class="credit">
+      <div class="desc">{{ product.name }}</div>
+      <div class="category">{{ product.type === 'SERVICE' ? 'Serviço' : 'Produto' }}</div>
+      <div class="amount">R$ {{ +product.price | number:'1.2-2' }}</div>
+      <div class="date">{{ product.description }}</div>
+      <button (click)="deleteProduct(product.id!)">🗑️ Excluir</button>
+    </li>
+  </ul>
+
+  <div class="empty" *ngIf="products.length === 0">
+    Nenhum produto ou serviço encontrado.
+  </div>
+</div>

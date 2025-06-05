@@ -66,6 +66,30 @@ export class ProductService {
     }
   };
 
+  getProductsByUser = async (userId: string) => {
+  try {
+    if (!userId) {
+      throw new ErrorMissingContent('User ID is required');
+    }
+
+    const products = await ProductModel.findAll({ where: { userId } });
+
+    if (products.length === 0) {
+      throw new NotFound('Nenhum produto encontrado para esse usuário');
+    }
+
+    return products;
+  } catch (err) {
+    console.error('Error in getProductsByUser:', err);
+    if (err instanceof Error) {
+      throw err;
+    } else {
+      throw new UnknowError(`Unexpected error in getProductsByUser: ${JSON.stringify(err)}`);
+    }
+  }
+};
+
+
   updateProduct = async (id: string, updateData: Partial<ProductCreationAttributes>) => {
     try {
       if (!id) {

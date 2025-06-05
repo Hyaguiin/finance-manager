@@ -78,6 +78,21 @@ class ProductController {
                 }
             }
         };
+        this.getProductsByUser = async (req, res) => {
+            try {
+                const { userId } = req.params;
+                const products = await this.productService.getProductsByUser(userId);
+                res.status(200).json(products);
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ message: `Error: ${err.message}` });
+                }
+                else {
+                    res.status(500).json({ message: 'Unknown error occurred' });
+                }
+            }
+        };
         this.deleteProduct = async (req, res) => {
             try {
                 const { id } = req.params;

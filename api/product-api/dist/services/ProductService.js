@@ -67,6 +67,27 @@ class ProductService {
                 }
             }
         };
+        this.getProductsByUser = async (userId) => {
+            try {
+                if (!userId) {
+                    throw new ErrorMissingContent_1.ErrorMissingContent('User ID is required');
+                }
+                const products = await ProductModel_1.default.findAll({ where: { userId } });
+                if (products.length === 0) {
+                    throw new NotFoundError_1.NotFound('Nenhum produto encontrado para esse usuário');
+                }
+                return products;
+            }
+            catch (err) {
+                console.error('Error in getProductsByUser:', err);
+                if (err instanceof Error) {
+                    throw err;
+                }
+                else {
+                    throw new Unkown_1.UnknowError(`Unexpected error in getProductsByUser: ${JSON.stringify(err)}`);
+                }
+            }
+        };
         this.updateProduct = async (id, updateData) => {
             try {
                 if (!id) {
