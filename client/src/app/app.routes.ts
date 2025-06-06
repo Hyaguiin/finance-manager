@@ -2,12 +2,13 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AnalisesComponent } from './dashboard/analises/analises.component';
+import { TransactionAnalysisListComponent } from './dashboard/transaction-analysis/transaction-analysis-list.component.';
+import { TransactionAnalysisCreateComponent } from './dashboard/transaction-analysis-create/transaction-analysis-create.component';
 import { TransacoesComponent } from './dashboard/transacoes/transacoes.component';
+import { TransacoesCreateComponent } from './dashboard/transacoes-create/transacoes-create.component';
 import { ProductsComponent } from './dashboard/products/products.component';
 import { ProductsCreateComponent } from './dashboard/products-service-create/products-services-create.component';
 import { ServicesComponent } from './dashboard/services-component/services.component';
-import { TransacoesCreateComponent } from './dashboard/transacoes-create/transacoes-create.component';
 
 export const routes: Routes = [
   {
@@ -24,7 +25,8 @@ export const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', redirectTo: 'analises', pathMatch: 'full' },
-      { path: 'analises', component: AnalisesComponent },
+      { path: 'transacoes_analise', component: TransactionAnalysisListComponent },
+      { path: 'transacoes_analise/create', component: TransactionAnalysisCreateComponent },
       { path: 'transacoes', component: TransacoesComponent },
       { path: 'transacoes/create', component: TransacoesCreateComponent },
       { path: 'produtos', component: ProductsComponent },

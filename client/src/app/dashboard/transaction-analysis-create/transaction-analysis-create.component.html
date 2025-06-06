@@ -1,0 +1,53 @@
+<div class="transaction-analysis-create-container">
+  <h2>Criar Análise de Transação</h2>
+
+  <form [formGroup]="analysisForm" (ngSubmit)="onSubmit()">
+    <label for="totalAmount">Total Amount:</label>
+    <input id="totalAmount" formControlName="totalAmount" type="number" step="0.01" />
+    <div *ngIf="analysisForm.get('totalAmount')?.touched && analysisForm.get('totalAmount')?.invalid">
+      Total Amount é obrigatório e deve ser maior ou igual a zero.
+    </div>
+
+    <label for="totalCredit">Total Credit:</label>
+    <input id="totalCredit" formControlName="totalCredit" type="number" step="0.01" />
+    <div *ngIf="analysisForm.get('totalCredit')?.touched && analysisForm.get('totalCredit')?.invalid">
+      Total Credit é obrigatório e deve ser maior ou igual a zero.
+    </div>
+
+    <label for="totalDebit">Total Debit:</label>
+    <input id="totalDebit" formControlName="totalDebit" type="number" step="0.01" />
+    <div *ngIf="analysisForm.get('totalDebit')?.touched && analysisForm.get('totalDebit')?.invalid">
+      Total Debit é obrigatório e deve ser maior ou igual a zero.
+    </div>
+
+    <label for="totalByCategory">Total por Categoria (JSON):</label>
+    <textarea id="totalByCategory" formControlName="totalByCategory" rows="4"></textarea>
+    <div *ngIf="analysisForm.get('totalByCategory')?.touched && analysisForm.get('totalByCategory')?.invalid">
+      Total por Categoria é obrigatório (formato JSON).
+    </div>
+
+    <label for="generatedAt">Data da Análise:</label>
+    <input id="generatedAt" formControlName="generatedAt" type="date" />
+    <div *ngIf="analysisForm.get('generatedAt')?.touched && analysisForm.get('generatedAt')?.invalid">
+      Data é obrigatória.
+    </div>
+
+    <label for="transactionId">ID da Transação:</label>
+    <input id="transactionId" formControlName="transactionId" type="text" />
+    <div *ngIf="analysisForm.get('transactionId')?.touched && analysisForm.get('transactionId')?.invalid">
+      ID da Transação é obrigatório.
+    </div>
+
+    <label for="userId">ID do Usuário:</label>
+<input id="userId" formControlName="userId" type="text" [disabled]="isUserIdDisabled()" />
+
+
+    <div *ngIf="analysisForm.get('userId')?.touched && analysisForm.get('userId')?.invalid">
+      ID do Usuário é obrigatório.
+    </div>
+
+    <button type="submit" [disabled]="isSubmitting">{{ isSubmitting ? 'Salvando...' : 'Criar' }}</button>
+
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </form>
+</div>

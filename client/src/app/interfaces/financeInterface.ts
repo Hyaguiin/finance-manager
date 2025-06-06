@@ -11,11 +11,12 @@ export interface Transaction {
 }
 
 export interface TransactionAnalyse {
-  id: string;
+  id?: string;
   totalAmount: number;
   totalCredit: number;
   totalDebit: number;
   totalByCategory: Record<string, number>;
-  generatedAt: string;
+  generatedAt: string | Date;
   transactionId: string;
+  userId: string;
 }

@@ -1,0 +1,97 @@
+.transaction-analysis-create-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #111;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #000;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    div {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      color: #333;
+      font-family: inherit;
+
+      &:focus {
+        border-color: #1976d2;
+        box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+        outline: none;
+        background-color: #fff;
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 0.875rem;
+      margin-top: 0.3rem;
+      font-weight: 600;
+    }
+  }
+
+  button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.75rem 2.5rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: #000000;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    &:disabled {
+      background-color: #9e9e9e;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
