@@ -1,8 +1,8 @@
 export const environment = {
-  production: false,
+  production: true,
   financeApiUrl: 'https://finance-manager-finance-api.vercel.app',
   authApiUrl: 'https://finance-manager-auth-api.vercel.app',
   analysis_reports_apiUrl:
-    ' https://finance-manager-reports-analyses-api.vercel.app',
+    'https://finance-manager-reports-analyses-api.vercel.app',
   productApiUrl: 'https://finance-manager-product-api.vercel.app',
 };

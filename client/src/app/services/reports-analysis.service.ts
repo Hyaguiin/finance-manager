@@ -9,7 +9,7 @@ import { TransactionAnalyse } from '../interfaces/financeInterface';
   providedIn: 'root',
 })
 export class TransactionAnalysisService {
-  private apiURL = environment.financeApiUrl;
+  private apiURL = environment.analysis_reports_apiUrl;
 
   constructor(private http: HttpClient) {}
 
