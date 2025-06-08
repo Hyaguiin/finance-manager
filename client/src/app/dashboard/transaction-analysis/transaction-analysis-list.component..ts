@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionAnalysisService } from '../../services/reports-analysis.service';
 import { TransactionAnalyse } from '../../interfaces/financeInterface';
 import { CommonModule } from '@angular/common';
-
+//rx
 @Component({
   selector: 'app-transaction-analysis-list',
   templateUrl: './transaction-analysis-list.component.html',
