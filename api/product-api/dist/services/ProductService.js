@@ -8,6 +8,7 @@ const ProductModel_1 = __importDefault(require("../models/ProductModel"));
 const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
 const NotFoundError_1 = require("../utils/NotFoundError");
 const Unkown_1 = require("../utils/Unkown");
+const EmptyArrayError_1 = require("../utils/EmptyArrayError");
 class ProductService {
     constructor() {
         this.createProduct = async (productData) => {
@@ -19,7 +20,7 @@ class ProductService {
                 await ProductModel_1.default.create(productData);
             }
             catch (err) {
-                console.error('Error in createProduct:', err);
+                console.error("Error in createProduct:", err);
                 if (err instanceof Error) {
                     throw err;
                 }
@@ -37,7 +38,7 @@ class ProductService {
                 return products;
             }
             catch (err) {
-                console.error('Error in getAllProducts:', err);
+                console.error("Error in getAllProducts:", err);
                 if (err instanceof Error) {
                     throw err;
                 }
@@ -58,7 +59,7 @@ class ProductService {
                 return product;
             }
             catch (err) {
-                console.error('Error in getProductById:', err);
+                console.error("Error in getProductById:", err);
                 if (err instanceof Error) {
                     throw err;
                 }
@@ -70,21 +71,62 @@ class ProductService {
         this.getProductsByUser = async (userId) => {
             try {
                 if (!userId) {
-                    throw new ErrorMissingContent_1.ErrorMissingContent('User ID is required');
+                    throw new ErrorMissingContent_1.ErrorMissingContent("User ID is required");
                 }
                 const products = await ProductModel_1.default.findAll({ where: { userId } });
                 if (products.length === 0) {
-                    throw new NotFoundError_1.NotFound('Nenhum produto encontrado para esse usuário');
+                    throw new NotFoundError_1.NotFound("Nenhum produto encontrado para esse usuário");
                 }
                 return products;
             }
             catch (err) {
-                console.error('Error in getProductsByUser:', err);
+                console.error("Error in getProductsByUser:", err);
                 if (err instanceof Error) {
                     throw err;
                 }
                 else {
                     throw new Unkown_1.UnknowError(`Unexpected error in getProductsByUser: ${JSON.stringify(err)}`);
+                }
+            }
+        };
+        this.getAllUserIdService = async (userId, SERVICE) => {
+            try {
+                if (!userId) {
+                    throw new ErrorMissingContent_1.ErrorMissingContent("User ID is required");
+                }
+                if ((await this.getAllProducts()).length === 0) {
+                    throw new EmptyArrayError_1.EmptyArrayError();
+                }
+                const service = await ProductModel_1.default.findAll({
+                    where: { userId: userId, type: SERVICE },
+                });
+                if (!service) {
+                    throw new Error(`SERVICE NOT FOUND!`);
+                }
+                console.log(`Todos os serviços: ${service}`);
+                return service;
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                }
+            }
+        };
+        this.getAllUserIdProducts = async (userId, PRODUCT) => {
+            try {
+                if ((await this.getAllProducts()).length === 0) {
+                    throw new EmptyArrayError_1.EmptyArrayError();
+                }
+                const service = await ProductModel_1.default.findAll({
+                    where: { userId: userId, type: PRODUCT },
+                });
+                if (!service) {
+                    throw new Error(`SERVICE NOT FOUND!`);
+                }
+                console.log(`Todos os serviços: ${service}`);
+                return service;
+            }
+            catch (err) {
+                if (err instanceof Error) {
                 }
             }
         };
@@ -101,7 +143,7 @@ class ProductService {
                 return product;
             }
             catch (err) {
-                console.error('Error in updateProduct:', err);
+                console.error("Error in updateProduct:", err);
                 if (err instanceof Error) {
                     throw err;
                 }
@@ -122,7 +164,7 @@ class ProductService {
                 await product.destroy();
             }
             catch (err) {
-                console.error('Error in deleteProduct:', err);
+                console.error("Error in deleteProduct:", err);
                 if (err instanceof Error) {
                     throw err;
                 }

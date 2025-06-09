@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const ProductService_1 = require("../services/ProductService");
+const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
 class ProductController {
     constructor() {
         this.createProduct = async (req, res) => {
@@ -16,7 +17,7 @@ class ProductController {
                 });
                 res.status(201).json({
                     success: true,
-                    message: 'Product/service created successfully',
+                    message: "Product/service created successfully",
                     product,
                 });
             }
@@ -25,7 +26,7 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
@@ -39,7 +40,7 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
@@ -54,7 +55,7 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
@@ -65,7 +66,7 @@ class ProductController {
                 const updatedProduct = await this.productService.updateProduct(id, updateData);
                 res.status(200).json({
                     success: true,
-                    message: 'Product/service updated successfully',
+                    message: "Product/service updated successfully",
                     product: updatedProduct,
                 });
             }
@@ -74,7 +75,7 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
@@ -89,7 +90,63 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
+                }
+            }
+        };
+        this.getProductTypeByUser = async (req, res) => {
+            const { userId } = req.params;
+            try {
+                if (!userId) {
+                    res.status(400).json({
+                        sucess: false,
+                        message: `Erro: ${ErrorMissingContent_1.ErrorMissingContent}`,
+                    });
+                    return;
+                }
+                const product = await this.productService.getAllUserIdProducts(userId, 'PRODUCT');
+                res
+                    .status(200)
+                    .json({
+                    sucess: true,
+                    message: `Todos os Produtos do ID: ${userId}`,
+                    product,
+                });
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ message: `Error: ${err.message}` });
+                }
+                else {
+                    res.status(500).json({ message: "Unknown error occurred" });
+                }
+            }
+        };
+        this.getServiceTypeByUser = async (req, res) => {
+            const { userId } = req.params;
+            try {
+                if (!userId) {
+                    res.status(400).json({
+                        sucess: false,
+                        message: `Erro: ${ErrorMissingContent_1.ErrorMissingContent}`,
+                    });
+                    return;
+                }
+                const service = await this.productService.getAllUserIdProducts(userId, 'SERVICE');
+                res
+                    .status(200)
+                    .json({
+                    sucess: true,
+                    message: `Todos os Produtos do ID: ${userId}`,
+                    service,
+                });
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ message: `Error: ${err.message}` });
+                }
+                else {
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
@@ -99,7 +156,7 @@ class ProductController {
                 await this.productService.deleteProduct(id);
                 res.status(200).json({
                     success: true,
-                    message: 'Product/service deleted successfully',
+                    message: "Product/service deleted successfully",
                 });
             }
             catch (err) {
@@ -107,7 +164,7 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
