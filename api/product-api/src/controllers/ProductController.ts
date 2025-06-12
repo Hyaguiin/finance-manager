@@ -107,30 +107,70 @@ export class ProductController {
 
 
 
- getProductsByUserAndType = async (req: Request, res: Response): Promise<void> => {
-  const { userId } = req.params;
-  const { type } = req.query; 
+  getProductTypeByUser = async (req: Request, res: Response): Promise<void> => {
+    const { userId } = req.params;
 
-  try {
-    const products = await this.productService.getProductsByUserAndType(
-      userId,
-      type as 'PRODUCT' | 'SERVICE'
-    );
 
-    res.status(200).json({
-      success: true,
-      message: `Produtos do usuário ${userId}${type ? ` do tipo ${type}` : ''}`,
-      products,
-    });
-  } catch (err) {
-    if (err instanceof Error) {
-      res.status(400).json({ message: `Error: ${err.message}` });
-    } else {
-      res.status(500).json({ message: 'Unknown error occurred' });
+    try {
+      if (!userId ) {
+        res.status(400).json({
+          sucess: false,
+          message: `Erro: ${ErrorMissingContent}`,
+        });
+        return;
+      }
+
+      const product = await this.productService.getAllUserIdProducts(
+        userId,
+        'PRODUCT'
+      );
+      res
+        .status(200)
+        .json({
+          sucess: true,
+          message: `Todos os Produtos do ID: ${userId}`,
+          product,
+        });
+    } catch (err) {
+      if (err instanceof Error) {
+        res.status(400).json({ message: `Error: ${err.message}` });
+      } else {
+        res.status(500).json({ message: "Unknown error occurred" });
+      }
     }
-  }
-};
+  };
 
+    getServiceTypeByUser = async (req: Request, res: Response): Promise<void> => {
+    const { userId} = req.params;
+      
+    try {
+      if (!userId) {
+        res.status(400).json({
+          sucess: false,
+          message: `Erro: ${ErrorMissingContent}`,
+        });
+        return;
+      }
+
+      const service = await this.productService.getAllUserIdProducts(
+        userId,
+        'SERVICE'
+      );
+      res
+        .status(200)
+        .json({
+          sucess: true,
+          message: `Todos os Produtos do ID: ${userId}`,
+          service,
+        });
+    } catch (err) {
+      if (err instanceof Error) {
+        res.status(400).json({ message: `Error: ${err.message}` });
+      } else {
+        res.status(500).json({ message: "Unknown error occurred" });
+      }
+    }
+  };
 
 
 
