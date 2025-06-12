@@ -96,46 +96,31 @@ export class ProductService {
     }
   };
 
-  getAllUserIdService = async (userId: string, SERVICE: string) => {
-    try {
-      if (!userId) {
-        throw new ErrorMissingContent("User ID is required");
-      }
-      if ((await this.getAllProducts()).length === 0) {
-        throw new EmptyArrayError();
-      }
-      const service = await ProductModel.findAll({
-        where:  {userId: userId, type: SERVICE},
-      });
-      if (!service) {
-        throw new Error(`SERVICE NOT FOUND!`);
-      }
-      console.log(`Todos os serviços: ${service}`);
-      return service;
-    } catch (err) {
-      if (err instanceof Error) {
-      }
+  getProductsByUserAndType = async (userId: string, type?: 'PRODUCT' | 'SERVICE') => {
+  try {
+    if (!userId) {
+      throw new ErrorMissingContent('User ID is required');
     }
-  };
 
-  getAllUserIdProducts = async (userId: string, PRODUCT: string) => {
-    try {
-      if ((await this.getAllProducts()).length === 0) {
-        throw new EmptyArrayError();
-      }
-      const service = await ProductModel.findAll({
-        where: { userId: userId, type: PRODUCT },
-      });
-      if (!service) {
-        throw new Error(`SERVICE NOT FOUND!`);
-      }
-      console.log(`Todos os serviços: ${service}`);
-      return service;
-    } catch (err) {
-      if (err instanceof Error) {
-      }
+    const whereClause: any = { userId };
+    if (type === 'PRODUCT' || type === 'SERVICE') {
+      whereClause.type = type;
     }
-  };
+
+    const products = await ProductModel.findAll({ where: whereClause });
+
+    if (products.length === 0) {
+      throw new NotFound('Nenhum produto encontrado com os critérios fornecidos');
+    }
+
+    return products;
+  } catch (err) {
+    console.error('Error in getProductsByUserAndType:', err);
+    if (err instanceof Error) throw err;
+    throw new UnknowError(`Unexpected error: ${JSON.stringify(err)}`);
+  }
+};
+
 
   updateProduct = async (
     id: string,

@@ -8,7 +8,6 @@ const ProductModel_1 = __importDefault(require("../models/ProductModel"));
 const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
 const NotFoundError_1 = require("../utils/NotFoundError");
 const Unkown_1 = require("../utils/Unkown");
-const EmptyArrayError_1 = require("../utils/EmptyArrayError");
 class ProductService {
     constructor() {
         this.createProduct = async (productData) => {
@@ -89,45 +88,26 @@ class ProductService {
                 }
             }
         };
-        this.getAllUserIdService = async (userId, SERVICE) => {
+        this.getProductsByUserAndType = async (userId, type) => {
             try {
                 if (!userId) {
-                    throw new ErrorMissingContent_1.ErrorMissingContent("User ID is required");
+                    throw new ErrorMissingContent_1.ErrorMissingContent('User ID is required');
                 }
-                if ((await this.getAllProducts()).length === 0) {
-                    throw new EmptyArrayError_1.EmptyArrayError();
+                const whereClause = { userId };
+                if (type === 'PRODUCT' || type === 'SERVICE') {
+                    whereClause.type = type;
                 }
-                const service = await ProductModel_1.default.findAll({
-                    where: { userId: userId, type: SERVICE },
-                });
-                if (!service) {
-                    throw new Error(`SERVICE NOT FOUND!`);
+                const products = await ProductModel_1.default.findAll({ where: whereClause });
+                if (products.length === 0) {
+                    throw new NotFoundError_1.NotFound('Nenhum produto encontrado com os critérios fornecidos');
                 }
-                console.log(`Todos os serviços: ${service}`);
-                return service;
+                return products;
             }
             catch (err) {
-                if (err instanceof Error) {
-                }
-            }
-        };
-        this.getAllUserIdProducts = async (userId, PRODUCT) => {
-            try {
-                if ((await this.getAllProducts()).length === 0) {
-                    throw new EmptyArrayError_1.EmptyArrayError();
-                }
-                const service = await ProductModel_1.default.findAll({
-                    where: { userId: userId, type: PRODUCT },
-                });
-                if (!service) {
-                    throw new Error(`SERVICE NOT FOUND!`);
-                }
-                console.log(`Todos os serviços: ${service}`);
-                return service;
-            }
-            catch (err) {
-                if (err instanceof Error) {
-                }
+                console.error('Error in getProductsByUserAndType:', err);
+                if (err instanceof Error)
+                    throw err;
+                throw new Unkown_1.UnknowError(`Unexpected error: ${JSON.stringify(err)}`);
             }
         };
         this.updateProduct = async (id, updateData) => {
