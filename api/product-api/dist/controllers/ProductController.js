@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const ProductService_1 = require("../services/ProductService");
+const ErrorMissingContent_1 = require("../utils/ErrorMissingContent");
 class ProductController {
     constructor() {
         this.createProduct = async (req, res) => {
@@ -93,15 +94,23 @@ class ProductController {
                 }
             }
         };
-        this.getProductsByUserAndType = async (req, res) => {
+        this.getProductTypeByUser = async (req, res) => {
             const { userId } = req.params;
-            const { type } = req.query;
             try {
-                const products = await this.productService.getProductsByUserAndType(userId, type);
-                res.status(200).json({
-                    success: true,
-                    message: `Produtos do usuário ${userId}${type ? ` do tipo ${type}` : ''}`,
-                    products,
+                if (!userId) {
+                    res.status(400).json({
+                        sucess: false,
+                        message: `Erro: ${ErrorMissingContent_1.ErrorMissingContent}`,
+                    });
+                    return;
+                }
+                const product = await this.productService.getAllUserIdProducts(userId, 'PRODUCT');
+                res
+                    .status(200)
+                    .json({
+                    sucess: true,
+                    message: `Todos os Produtos do ID: ${userId}`,
+                    product,
                 });
             }
             catch (err) {
@@ -109,7 +118,35 @@ class ProductController {
                     res.status(400).json({ message: `Error: ${err.message}` });
                 }
                 else {
-                    res.status(500).json({ message: 'Unknown error occurred' });
+                    res.status(500).json({ message: "Unknown error occurred" });
+                }
+            }
+        };
+        this.getServiceTypeByUser = async (req, res) => {
+            const { userId } = req.params;
+            try {
+                if (!userId) {
+                    res.status(400).json({
+                        sucess: false,
+                        message: `Erro: ${ErrorMissingContent_1.ErrorMissingContent}`,
+                    });
+                    return;
+                }
+                const service = await this.productService.getAllUserIdProducts(userId, 'SERVICE');
+                res
+                    .status(200)
+                    .json({
+                    sucess: true,
+                    message: `Todos os Produtos do ID: ${userId}`,
+                    service,
+                });
+            }
+            catch (err) {
+                if (err instanceof Error) {
+                    res.status(400).json({ message: `Error: ${err.message}` });
+                }
+                else {
+                    res.status(500).json({ message: "Unknown error occurred" });
                 }
             }
         };
