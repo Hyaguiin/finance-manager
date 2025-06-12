@@ -68,6 +68,12 @@ logout(): void {
   }
   
 
+  getToken(): string | null {
+  return localStorage.getItem('token');
+}
+
+
+
  getUserId(): string | null {
   const user = this.getLoggedUser();
   if (user && user.id) {

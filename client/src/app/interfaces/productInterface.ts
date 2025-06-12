@@ -8,3 +8,9 @@ export interface Product {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface ProductResponse {
+  success: boolean;
+  message: string;
+  products: Product[];
+}

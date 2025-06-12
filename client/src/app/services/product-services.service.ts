@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service'; // importe AuthService
 import { Product } from '../interfaces/productInterface';
+import { ProductResponse } from '../interfaces/productInterface';
 
 
 @Injectable({
@@ -15,11 +16,12 @@ export class ProductService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = this.authService.getLoggedUser(); 
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-  }
+  const token = this.authService.getToken();
+  return new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+}
+
 
   getAll(): Observable<Product[]> {
     const headers = this.getAuthHeaders();
@@ -46,8 +48,12 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/user/${userId}`, { headers });
   }
 
-  getByType(type: 'PRODUCT' | 'SERVICE', userId: string): Observable<Product[]> {
-  return this.http.get<Product[]>(`${this.apiUrl}/user/${userId}?type=${type}`);
+getByType(type: 'PRODUCT' | 'SERVICE', userId: string): Observable<ProductResponse> {
+  const endpoint = type === 'PRODUCT' 
+    ? `${this.apiUrl}/api/product/user/product/${userId}`
+    : `${this.apiUrl}/api/product/user/service/${userId}`;
+
+  return this.http.get<ProductResponse>(endpoint, { headers: this.getAuthHeaders() });
 }
 
   delete(id: string): Observable<any> {

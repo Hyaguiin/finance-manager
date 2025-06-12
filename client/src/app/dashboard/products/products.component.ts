@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-products',
   imports: [CommonModule],
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
@@ -20,9 +20,10 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = this.authService.getUserId();
+    console.log('[DEBUG] userId recebido no ProductsComponent:', userId);
 
     if (!userId) {
-      console.error('Usuário não autenticado');
+      console.error('[ERROR] Usuário não autenticado no ProductsComponent');
       return;
     }
 
@@ -30,9 +31,14 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts(userId: string) {
+    console.log('[DEBUG] Chamando loadProducts para userId:', userId);
     this.productService.getByType('PRODUCT', userId).subscribe({
-      next: (data) => this.products = data,
-      error: (err) => console.error('Erro ao carregar produtos', err),
+      next: (data) => {
+        console.log('[DEBUG] Produtos extraídos:', data.products);
+        this.products = data.products;
+      },
+
+      error: (err) => console.error('[ERROR] Falha ao carregar produtos:', err),
     });
   }
 

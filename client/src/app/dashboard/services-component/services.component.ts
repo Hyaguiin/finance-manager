@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService  } from '../../services/product-services.service';
+import { ProductService } from '../../services/product-services.service';
 import { AuthService } from '../../services/auth.service';
-import { Product } from '../../interfaces/productInterface';
+import { Product, ProductResponse } from '../../interfaces/productInterface';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -32,7 +32,10 @@ export class ServicesComponent implements OnInit {
 
   loadServices(userId: string) {
     this.productService.getByType('SERVICE', userId).subscribe({
-      next: (data) => this.services = data,
+      next: (data: ProductResponse) => {
+        console.log('[DEBUG] Serviços carregados:', data.products);
+        this.services = data.products;
+      },
       error: (err) => console.error('Erro ao carregar serviços', err),
     });
   }
