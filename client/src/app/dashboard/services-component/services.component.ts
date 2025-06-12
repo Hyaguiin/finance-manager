@@ -15,7 +15,7 @@ export class ServicesComponent implements OnInit {
   services: Product[] = [];
 
   constructor(
-    private productService: ProductService,
+    private serviceService: ProductService,
     private authService: AuthService
   ) {}
 
@@ -31,18 +31,29 @@ export class ServicesComponent implements OnInit {
   }
 
   loadServices(userId: string) {
-    this.productService.getByType('SERVICE', userId).subscribe({
-      next: (data: ProductResponse) => {
-        console.log('[DEBUG] Serviços carregados:', data.products);
-        this.services = data.products;
-      },
-      error: (err) => console.error('Erro ao carregar serviços', err),
-    });
-  }
+  this.serviceService.getByType('SERVICE', userId).subscribe({
+    next: (data: any) => {
+      console.log('[DEBUG] Resposta da API para serviços:', data);
+
+      // Verifique se a resposta tem a propriedade 'service' (singular)
+      if (Array.isArray(data)) {
+        this.services = data;
+      } else if (data.service) {
+        this.services = data.service;
+      } else if (data.services) {
+        this.services = data.services;
+      } else {
+        this.services = [];
+        console.warn('[WARN] Nenhuma lista de serviços encontrada na resposta');
+      }
+    },
+    error: (err) => console.error('[ERROR] Falha ao carregar serviços:', err),
+  });
+}
 
   deleteService(id: string): void {
     if (confirm('Deseja realmente excluir este serviço?')) {
-      this.productService.delete(id).subscribe(() => {
+      this.serviceService.delete(id).subscribe(() => {
         const userId = this.authService.getUserId();
         if (userId) {
           this.loadServices(userId);

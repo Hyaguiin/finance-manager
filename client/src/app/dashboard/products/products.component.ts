@@ -30,17 +30,25 @@ export class ProductsComponent implements OnInit {
     this.loadProducts(userId);
   }
 
-  loadProducts(userId: string) {
-    console.log('[DEBUG] Chamando loadProducts para userId:', userId);
-    this.productService.getByType('PRODUCT', userId).subscribe({
-      next: (data) => {
-        console.log('[DEBUG] Produtos extraídos:', data.products);
+ loadProducts(userId: string) {
+  this.productService.getByType('PRODUCT', userId).subscribe({
+    next: (data: any) => {
+      console.log('[DEBUG] Resposta da API para produtos:', data);
+      if (Array.isArray(data)) {
+        this.products = data;
+      } else if (data.product) {
+        this.products = data.product;
+      } else if (data.products) {
         this.products = data.products;
-      },
+      } else {
+        this.products = [];
+        console.warn('[WARN] Nenhuma lista de produtos encontrada na resposta');
+      }
+    },
+    error: (err) => console.error('[ERROR] Falha ao carregar produtos:', err),
+  });
+}
 
-      error: (err) => console.error('[ERROR] Falha ao carregar produtos:', err),
-    });
-  }
 
   deleteProduct(id: string): void {
     if (confirm('Deseja realmente excluir este item?')) {

@@ -1,8 +1,8 @@
 <div class="transactions-container">
   <h2>Lista de Produtos</h2>
 
-  <ul *ngIf="products.length > 0">
-    <li *ngFor="let product of products" class="credit">
+  <ul *ngIf="products && products.length > 0">
+    <li *ngFor="let product of products ?? []" class="credit">
       <div class="desc">{{ product.name }}</div>
       <div class="category">Produto</div>
       <div class="amount">R$ {{ +product.price | number:'1.2-2' }}</div>
@@ -11,7 +11,7 @@
     </li>
   </ul>
 
-  <div class="empty" *ngIf="products.length === 0">
+  <div class="empty" *ngIf="products && products.length === 0">
     Nenhum produto encontrado.
   </div>
 </div>

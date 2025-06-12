@@ -50,8 +50,8 @@ export class ProductService {
 
 getByType(type: 'PRODUCT' | 'SERVICE', userId: string): Observable<ProductResponse> {
   const endpoint = type === 'PRODUCT' 
-    ? `${this.apiUrl}/api/product/user/product/${userId}`
-    : `${this.apiUrl}/api/product/user/service/${userId}`;
+    ? `${this.apiUrl}/user/product/${userId}`
+    : `${this.apiUrl}/user/service/${userId}`;
 
   return this.http.get<ProductResponse>(endpoint, { headers: this.getAuthHeaders() });
 }

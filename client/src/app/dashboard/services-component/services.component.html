@@ -1,8 +1,8 @@
 <div class="transactions-container">
   <h2>Lista de Serviços</h2>
 
-  <ul *ngIf="services.length > 0">
-    <li *ngFor="let service of services" class="credit">
+  <ul *ngIf="services && services.length > 0">
+    <li *ngFor="let service of services ?? []" class="credit">
       <div class="desc">{{ service.name }}</div>
       <div class="category">Serviço</div>
       <div class="amount">R$ {{ +service.price | number:'1.2-2' }}</div>
@@ -11,7 +11,7 @@
     </li>
   </ul>
 
-  <div class="empty" *ngIf="services.length === 0">
+  <div class="empty" *ngIf="services && services.length === 0">
     Nenhum serviço encontrado.
   </div>
 </div>
