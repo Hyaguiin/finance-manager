@@ -4,6 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartType, ChartOptions } from 'chart.js';
 import { TransactionService } from '../../services/transaction.service';
 import { ProductService } from '../../services/product-services.service';
+import { AuthService } from '../../services/auth.service';
 import { Transaction } from '../../interfaces/financeInterface';
 import { Product } from '../../interfaces/productInterface';
 import {
@@ -22,7 +23,6 @@ import {
   BarElement,
 } from 'chart.js';
 
-// Registra todos os elementos necessários
 Chart.register(
   ArcElement,
   PieController,
@@ -37,7 +37,6 @@ Chart.register(
   LineElement,
   BarElement
 );
-
 
 @Component({
   selector: 'app-home',
@@ -56,33 +55,23 @@ export class HomeComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
 
-  // Gráfico de pizza (distribuição por categoria)
   public pieChartType: ChartType = 'pie';
   public pieChartData: ChartData<'pie', number[], string> = {
     labels: [],
     datasets: [
       {
         data: [],
-        backgroundColor: [
-          '#000000',
-          '#555555',
-          '#999999',
-          '#222222',
-          '#444444',
-        ],
+        backgroundColor: ['#000000', '#555555', '#999999', '#222222', '#444444'],
       },
     ],
   };
   public pieChartOptions: ChartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        labels: { color: '#000' },
-      },
+      legend: { labels: { color: '#000' } },
     },
   };
 
-  // Gráfico de linha (transações ao longo do tempo)
   public lineChartType: ChartType = 'line';
   public lineChartData: ChartData<'line'> = {
     labels: [],
@@ -108,7 +97,6 @@ export class HomeComponent implements OnInit {
     },
   };
 
-  // Gráfico de barras (produtos por categoria)
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
     labels: [],
@@ -133,18 +121,25 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.loadDashboardData();
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      this.errorMessage = 'Usuário não autenticado.';
+      this.isLoading = false;
+      return;
+    }
+    this.loadDashboardData(userId);
   }
 
-  loadDashboardData(): void {
+  loadDashboardData(userId: string): void {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.transactionService.getTransactions().subscribe({
+    this.transactionService.getTransactionsByUser(userId).subscribe({
       next: (trans) => {
         this.transactions = trans;
         this.totalTransactionAmount = trans.reduce(
@@ -152,17 +147,14 @@ export class HomeComponent implements OnInit {
           0
         );
 
-        // Gráfico de pizza (por categoria)
         const categoryTotals: Record<string, number> = {};
         const transactionsByDate: Record<string, number> = {};
         trans.forEach((t) => {
-          // Pizza
           if (t.category) {
             categoryTotals[t.category] =
               (categoryTotals[t.category] || 0) + (t.amount || 0);
           }
 
-          // Linha
           const date = new Date(t.date).toLocaleDateString();
           transactionsByDate[date] =
             (transactionsByDate[date] || 0) + (t.amount || 0);
@@ -174,14 +166,11 @@ export class HomeComponent implements OnInit {
         this.lineChartData.labels = Object.keys(transactionsByDate);
         this.lineChartData.datasets[0].data = Object.values(transactionsByDate);
 
-        // Carrega produtos
-        this.productService.getAll().subscribe({
+        this.productService.getProductsByUser(userId).subscribe({
           next: (prod) => {
             this.products = prod;
             this.totalProductsCount = prod.length;
 
-            // Gráfico de barras (produtos por categoria)
-            // Gráfico de barras (produtos por tipo)
             const productTypeCount: Record<string, number> = {
               PRODUCT: 0,
               SERVICE: 0,
