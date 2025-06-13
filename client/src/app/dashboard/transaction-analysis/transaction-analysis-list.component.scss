@@ -1,11 +1,21 @@
 .transaction-analysis-list {
-  padding: 20px;
-  background-color: #ffffff;
+  padding: 2rem;
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   color: #111;
-  margin: 40px auto;
+  margin: 3rem auto;
   max-width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-left: 6px solid #000; // borda preta grossa na lateral
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
 }
 
 .table-wrapper {
@@ -18,47 +28,55 @@
   min-width: 800px;
   border-collapse: collapse;
   font-size: 14px;
-  margin-top: 20px;
-}
-
-.table th,
-.table td {
-  padding: 12px 16px;
+  margin-top: 1.5rem;
+  color: #000;
   border: 1px solid #000;
-  text-align: left;
-}
+  border-left: none; // porque o container já tem a borda lateral preta
+  border-radius: 0 8px 8px 0;
+  box-shadow: inset 0 0 0 1px #000;
 
-.table th {
-  background-color: #000000; /* <-- aqui o fundo preto */
-  color: #ffffff;            /* <-- texto branco */
-  text-transform: uppercase;
-  font-weight: bold;
-}
+  th,
+  td {
+    padding: 12px 16px;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    text-align: left;
+  }
 
-.table td {
-  background-color: #ffffff;
-  color: #333;
-}
+  th {
+    background-color: #000; // fundo preto
+    color: #fff; // texto branco
+    text-transform: uppercase;
+    font-weight: 700;
+    border-top-left-radius: 8px;
+  }
 
-.table tr:hover {
-  background-color: #f9f9f9;
-}
+  td {
+    background-color: #fff;
+    color: #111;
+  }
 
-.table td ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+  tr:hover td {
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease;
+  }
 
-.table td ul li {
-  font-size: 13px;
-  color: #444;
+  td ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  td ul li {
+    font-size: 13px;
+    color: #444;
+  }
 }
 
 .error {
   color: #d32f2f;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 1rem;
   text-align: center;
 }
 
@@ -68,20 +86,21 @@ div[ngIf="analyses.length === 0 && !isLoading"] {
   color: #666;
   font-style: italic;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
-  h2 {
-    font-size: 20px;
+  .transaction-analysis-list h2 {
+    font-size: 1.5rem;
   }
 
   .table {
     font-size: 13px;
   }
 
-  .table th,
-  .table td {
+  th,
+  td {
     padding: 10px 12px;
   }
 }
@@ -89,14 +108,15 @@ div[ngIf="analyses.length === 0 && !isLoading"] {
 @media (max-width: 480px) {
   .table {
     font-size: 12px;
+    min-width: 100%;
   }
 
-  .table th,
-  .table td {
+  th,
+  td {
     padding: 8px 10px;
   }
 
-  .table td ul li {
+  td ul li {
     font-size: 11px;
   }
 }

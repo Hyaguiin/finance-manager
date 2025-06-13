@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './dashboard/home/home.component'; 
 import { TransactionAnalysisListComponent } from './dashboard/transaction-analysis/transaction-analysis-list.component.';
 import { TransactionAnalysisCreateComponent } from './dashboard/transaction-analysis-create/transaction-analysis-create.component';
 import { TransacoesComponent } from './dashboard/transacoes/transacoes.component';
@@ -24,7 +25,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     children: [
-      { path: '', redirectTo: 'analises', pathMatch: 'full' },
+      { path: '', component: HomeComponent }, 
       { path: 'transacoes_analise', component: TransactionAnalysisListComponent },
       { path: 'transacoes_analise/create', component: TransactionAnalysisCreateComponent },
       { path: 'transacoes', component: TransacoesComponent },

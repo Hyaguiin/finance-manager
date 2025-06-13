@@ -5,6 +5,7 @@ import { HeaderComponent } from '../layout-base/header/header.component';
 import { SidebarComponent } from '../layout-base/sidebar/sidebar.component';
 import { FooterComponent } from '../layout-base/footer/footer.component';
 
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
