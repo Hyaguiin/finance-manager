@@ -187,14 +187,14 @@ export class HomeComponent implements OnInit {
             this.isLoading = false;
           },
           error: (err) => {
-            this.errorMessage = 'Erro ao carregar produtos.';
+            this.errorMessage = 'Ainda não existe nenhum dado criado para este usuário!';
             console.error(err);
             this.isLoading = false;
           },
         });
       },
       error: (err) => {
-        this.errorMessage = 'Erro ao carregar transações.';
+        this.errorMessage = 'Ainda não foram feitas transações para esse usuário!.';
         console.error(err);
         this.isLoading = false;
       },
