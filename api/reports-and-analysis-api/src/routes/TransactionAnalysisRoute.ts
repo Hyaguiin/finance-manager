@@ -12,7 +12,7 @@ router.post(
 );
 
 router.get("/", transactionAnalysisController.getAll);
-router.get("/:id", transactionAnalysisController.getById);
+router.get("/user/:userId", transactionAnalysisController.getByUserId); 
 router.put("/:id", transactionAnalysisController.update);
 router.delete("/:id", transactionAnalysisController.delete);
 

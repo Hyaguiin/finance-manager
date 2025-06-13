@@ -10,7 +10,7 @@ const router = express_1.default.Router();
 const transactionAnalysisController = new TransactionAnalysisController_1.default();
 router.post("/", TransactionAnalysisMiddleware_1.validateTransactionAnalysisData, transactionAnalysisController.create);
 router.get("/", transactionAnalysisController.getAll);
-router.get("/:id", transactionAnalysisController.getById);
+router.get("/user/:userId", transactionAnalysisController.getByUserId);
 router.put("/:id", transactionAnalysisController.update);
 router.delete("/:id", transactionAnalysisController.delete);
 exports.default = router;

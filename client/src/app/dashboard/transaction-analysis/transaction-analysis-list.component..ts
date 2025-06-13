@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionAnalysisService } from '../../services/reports-analysis.service';
 import { TransactionAnalyse } from '../../interfaces/financeInterface';
 import { CommonModule } from '@angular/common';
-//rx
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-transaction-analysis-list',
   templateUrl: './transaction-analysis-list.component.html',
-  imports:[CommonModule],
+  imports: [CommonModule],
   styleUrls: ['./transaction-analysis-list.component.scss'],
 })
 export class TransactionAnalysisListComponent implements OnInit {
@@ -14,23 +15,34 @@ export class TransactionAnalysisListComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
 
-  constructor(private analysisService: TransactionAnalysisService) {}
+  constructor(
+    private analysisService: TransactionAnalysisService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.loadAnalyses();
+    this.loadAnalysesByUser();
   }
 
-  loadAnalyses(): void {
+  loadAnalysesByUser(): void {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.analysisService.getAll().subscribe({
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      this.errorMessage = 'Usuário não autenticado.';
+      this.isLoading = false;
+      return;
+    }
+
+    this.analysisService.getByUser(userId).subscribe({
       next: (data) => {
         this.analyses = data;
         this.isLoading = false;
       },
       error: (err) => {
-        this.errorMessage = 'Erro ao carregar análises.';
+        this.errorMessage = 'Erro ao carregar análises do usuário.';
         console.error(err);
         this.isLoading = false;
       },
@@ -41,11 +53,17 @@ export class TransactionAnalysisListComponent implements OnInit {
     return Object.keys(categories);
   }
 
-  // Exemplo de função para criar análise automaticamente, pode ser chamada a partir de botão
   generateAnalysis(): void {
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      alert('Usuário não autenticado. Não é possível gerar análise.');
+      return;
+    }
+
     const sampleAnalysis: Partial<TransactionAnalyse> = {
       transactionId: 'exemplo-transaction-id',
-      userId: 'exemplo-user-id',
+      userId: userId, // Agora seguro, após verificação
       totalAmount: 200.75,
       totalCredit: 150,
       totalDebit: 50.75,
@@ -59,7 +77,7 @@ export class TransactionAnalysisListComponent implements OnInit {
     this.analysisService.create(sampleAnalysis).subscribe({
       next: () => {
         alert('Análise gerada com sucesso!');
-        this.loadAnalyses(); // Recarrega a lista após criar
+        this.loadAnalysesByUser();
       },
       error: (err) => {
         alert('Erro ao gerar análise');
