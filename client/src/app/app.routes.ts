@@ -10,6 +10,8 @@ import { TransacoesCreateComponent } from './dashboard/transacoes-create/transac
 import { ProductsComponent } from './dashboard/products/products.component';
 import { ProductsCreateComponent } from './dashboard/products-service-create/products-services-create.component';
 import { ServicesComponent } from './dashboard/services-component/services.component';
+import { AuthGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
   {
@@ -24,8 +26,9 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],  // <-- Protege todo o dashboard
     children: [
-      { path: '', component: HomeComponent }, 
+      { path: '', component: HomeComponent },
       { path: 'transacoes_analise', component: TransactionAnalysisListComponent },
       { path: 'transacoes_analise/create', component: TransactionAnalysisCreateComponent },
       { path: 'transacoes', component: TransacoesComponent },

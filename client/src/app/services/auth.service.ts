@@ -72,6 +72,9 @@ logout(): void {
   return localStorage.getItem('token');
 }
 
+ isAuthenticated(): boolean {
+    return !!localStorage.getItem('user');
+  }
 
 
  getUserId(): string | null {
