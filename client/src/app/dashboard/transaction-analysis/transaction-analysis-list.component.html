@@ -4,38 +4,38 @@
   <div *ngIf="isLoading">Carregando análises...</div>
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-  <table *ngIf="analyses.length > 0" class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>ID Transação</th>
-        <th>ID Usuário</th>
-        <th>Valor Total</th>
-        <th>Crédito Total</th>
-        <th>Débito Total</th>
-        <th>Total por Categoria</th>
-        <th>Gerado em</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let analysis of analyses">
-        <td>{{ analysis.id }}</td>
-        <td>{{ analysis.transactionId }}</td>
-        <td>{{ analysis.userId }}</td>
-        <td>{{ analysis.totalAmount | currency:'BRL' }}</td>
-        <td>{{ analysis.totalCredit | currency:'BRL' }}</td>
-        <td>{{ analysis.totalDebit | currency:'BRL' }}</td>
-        <td>
-          <ul>
-            <li *ngFor="let key of getCategoryKeys(analysis.totalByCategory)">
-              {{ key }}: {{ analysis.totalByCategory[key] | currency:'BRL' }}
-            </li>
-          </ul>
-        </td>
-        <td>{{ analysis.generatedAt | date:'short' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-wrapper">
+    <table *ngIf="analyses.length > 0" class="table">
+      <thead>
+        <tr>
+       
+          <th>ID Transação</th>
+          <th>Valor Total</th>
+          <th>Crédito Total</th>
+          <th>Débito Total</th>
+          <th>Total por Categoria</th>
+          <th>Gerado em</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let analysis of analyses">
+        
+          <td>{{ analysis.transactionId }}</td>
+          <td>{{ analysis.totalAmount | currency:'BRL' }}</td>
+          <td>{{ analysis.totalCredit | currency:'BRL' }}</td>
+          <td>{{ analysis.totalDebit | currency:'BRL' }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let key of getCategoryKeys(analysis.totalByCategory)">
+                {{ key }}: {{ analysis.totalByCategory[key] | currency:'BRL' }}
+              </li>
+            </ul>
+          </td>
+          <td>{{ analysis.generatedAt | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div *ngIf="analyses.length === 0 && !isLoading">Nenhuma análise encontrada.</div>
 </div>

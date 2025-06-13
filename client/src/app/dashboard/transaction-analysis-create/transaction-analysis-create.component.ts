@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { TransactionAnalysisService } from '../../services/reports-analysis.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-transaction-analysis-create',
   templateUrl: './transaction-analysis-create.component.html',
-  imports:[CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   styleUrls: ['./transaction-analysis-create.component.scss']
 })
 export class TransactionAnalysisCreateComponent implements OnInit {
@@ -21,7 +21,7 @@ export class TransactionAnalysisCreateComponent implements OnInit {
     private fb: FormBuilder,
     private analysisService: TransactionAnalysisService,
     private router: Router,
-    private authService: AuthService 
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -29,71 +29,76 @@ export class TransactionAnalysisCreateComponent implements OnInit {
       totalAmount: ['', [Validators.required, Validators.min(0)]],
       totalCredit: ['', [Validators.required, Validators.min(0)]],
       totalDebit: ['', [Validators.required, Validators.min(0)]],
-      totalByCategory: ['', [Validators.required, this.validateJson]],
+      categories: this.fb.array([]),
       generatedAt: ['', Validators.required],
       transactionId: ['', Validators.required],
-      userId: ['', Validators.required],  
+      userId: ['', Validators.required],
     });
 
     this.setUserId();
+    this.addCategory(); // adiciona pelo menos uma categoria
   }
 
   setUserId(): void {
-  const userId = this.authService.getUserId();  
-  this.analysisForm.patchValue({ userId });  
-
-  this.analysisForm.get('userId')?.disable(); 
-}
-  isUserIdDisabled(): boolean {
-    return this.analysisForm.get('userId')?.disabled ?? false;  
+    const userId = this.authService.getUserId();
+    this.analysisForm.patchValue({ userId });
+    this.analysisForm.get('userId')?.disable();
   }
-  validateJson(control: any): { [key: string]: boolean } | null {
-    try {
-      const parsed = JSON.parse(control.value);
-      return parsed && typeof parsed === 'object' ? null : { invalidJson: true };
-    } catch {
-      return { invalidJson: true };
-    }
+
+  isUserIdDisabled(): boolean {
+    return this.analysisForm.get('userId')?.disabled ?? false;
+  }
+
+  get categories(): FormArray {
+    return this.analysisForm.get('categories') as FormArray;
+  }
+
+  addCategory(): void {
+    const categoryGroup = this.fb.group({
+      name: ['', Validators.required],
+      amount: [0, [Validators.required, Validators.min(0)]],
+    });
+    this.categories.push(categoryGroup);
+  }
+
+  removeCategory(index: number): void {
+    this.categories.removeAt(index);
   }
 
   onSubmit(): void {
     if (this.analysisForm.invalid) {
-      this.analysisForm.markAllAsTouched();  // Marca todos os campos como tocados para exibir erros
+      this.analysisForm.markAllAsTouched();
       return;
     }
 
     this.isSubmitting = true;
-    this.errorMessage = '';  // Limpa qualquer mensagem de erro anterior
+    this.errorMessage = '';
 
-    let formValue = this.analysisForm.value;
+    const formValue = this.analysisForm.getRawValue();
 
-    let totalByCategoryParsed;
-    try {
-      totalByCategoryParsed = JSON.parse(formValue.totalByCategory);
-    } catch {
-      this.errorMessage = 'Formato inválido para Total por Categoria.'; 
-      this.isSubmitting = false;
-      return;
-    }
+    const totalByCategory = formValue.categories.reduce((acc: any, cat: any) => {
+      acc[cat.name] = parseFloat(cat.amount);
+      return acc;
+    }, {});
 
     const newAnalysis = {
       totalAmount: +formValue.totalAmount,
       totalCredit: +formValue.totalCredit,
       totalDebit: +formValue.totalDebit,
-      totalByCategory: totalByCategoryParsed,
-      generatedAt: new Date().toISOString(),
+      totalByCategory,
+      generatedAt: new Date(formValue.generatedAt).toISOString(),
       transactionId: formValue.transactionId,
-      userId: formValue.userId,  
+      userId: formValue.userId,
     };
 
     this.analysisService.create(newAnalysis).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.router.navigate(['/dashboard/transaction-analyses']);  
+        this.router.navigate(['/dashboard/transaction-analyses']);
       },
       error: (error) => {
         this.isSubmitting = false;
-        this.errorMessage = 'Erro ao criar análise. Tente novamente.';  
+        this.errorMessage = 'Erro ao criar análise. Tente novamente.';
         console.error('Erro:', error);
       },
     });
