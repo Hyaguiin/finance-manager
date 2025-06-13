@@ -94,7 +94,7 @@ export class TransactionAnalysisCreateComponent implements OnInit {
     this.analysisService.create(newAnalysis).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.router.navigate(['/dashboard/transaction-analyses']);
+        this.router.navigate(['/dashboard/transacoes_analise']);
       },
       error: (error) => {
         this.isSubmitting = false;
