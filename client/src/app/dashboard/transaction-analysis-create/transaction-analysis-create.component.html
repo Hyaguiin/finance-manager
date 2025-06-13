@@ -3,28 +3,66 @@
 
   <form [formGroup]="analysisForm" (ngSubmit)="onSubmit()">
     <label for="totalAmount">Total Amount:</label>
-    <input id="totalAmount" formControlName="totalAmount" type="number" step="0.01" />
-    <div *ngIf="analysisForm.get('totalAmount')?.touched && analysisForm.get('totalAmount')?.invalid">
+    <input
+      id="totalAmount"
+      formControlName="totalAmount"
+      type="number"
+      step="0.01"
+    />
+    <div
+      *ngIf="
+        analysisForm.get('totalAmount')?.touched &&
+        analysisForm.get('totalAmount')?.invalid
+      "
+    >
       Total Amount é obrigatório e deve ser maior ou igual a zero.
     </div>
 
     <label for="totalCredit">Total Credit:</label>
-    <input id="totalCredit" formControlName="totalCredit" type="number" step="0.01" />
-    <div *ngIf="analysisForm.get('totalCredit')?.touched && analysisForm.get('totalCredit')?.invalid">
+    <input
+      id="totalCredit"
+      formControlName="totalCredit"
+      type="number"
+      step="0.01"
+    />
+    <div
+      *ngIf="
+        analysisForm.get('totalCredit')?.touched &&
+        analysisForm.get('totalCredit')?.invalid
+      "
+    >
       Total Credit é obrigatório e deve ser maior ou igual a zero.
     </div>
 
     <label for="totalDebit">Total Debit:</label>
-    <input id="totalDebit" formControlName="totalDebit" type="number" step="0.01" />
-    <div *ngIf="analysisForm.get('totalDebit')?.touched && analysisForm.get('totalDebit')?.invalid">
+    <input
+      id="totalDebit"
+      formControlName="totalDebit"
+      type="number"
+      step="0.01"
+    />
+    <div
+      *ngIf="
+        analysisForm.get('totalDebit')?.touched &&
+        analysisForm.get('totalDebit')?.invalid
+      "
+    >
       Total Debit é obrigatório e deve ser maior ou igual a zero.
     </div>
 
     <div formArrayName="categories">
       <label>Total por Categoria:</label>
-      <div *ngFor="let cat of categories.controls; let i = index" [formGroupName]="i">
+      <div
+        *ngFor="let cat of categories.controls; let i = index"
+        [formGroupName]="i"
+      >
         <input placeholder="Categoria" formControlName="name" />
-        <input placeholder="Valor" formControlName="amount" type="number" step="0.01" />
+        <input
+          placeholder="Valor"
+          formControlName="amount"
+          type="number"
+          step="0.01"
+        />
         <button type="button" (click)="removeCategory(i)">Remover</button>
       </div>
       <button type="button" (click)="addCategory()">Adicionar Categoria</button>
@@ -32,23 +70,50 @@
 
     <label for="generatedAt">Data da Análise:</label>
     <input id="generatedAt" formControlName="generatedAt" type="date" />
-    <div *ngIf="analysisForm.get('generatedAt')?.touched && analysisForm.get('generatedAt')?.invalid">
+    <div
+      *ngIf="
+        analysisForm.get('generatedAt')?.touched &&
+        analysisForm.get('generatedAt')?.invalid
+      "
+    >
       Data é obrigatória.
     </div>
 
-    <label for="transactionId">ID da Transação:</label>
-    <input id="transactionId" formControlName="transactionId" type="text" />
-    <div *ngIf="analysisForm.get('transactionId')?.touched && analysisForm.get('transactionId')?.invalid">
-      ID da Transação é obrigatório.
+    <label for="transactionId">Transação:</label>
+    <select id="transactionId" formControlName="transactionId">
+      <option value="">Selecione uma transação</option>
+      <option *ngFor="let trans of transactions" [value]="trans.id">
+        {{ trans.description || "Sem nome" }} - {{ trans.amount | currency : "BRL" }}
+      </option>
+    </select>
+    <div
+      *ngIf="
+        analysisForm.get('transactionId')?.touched &&
+        analysisForm.get('transactionId')?.invalid
+      "
+    >
+      Você deve selecionar uma transação.
     </div>
 
     <label for="userId">ID do Usuário:</label>
-    <input id="userId" formControlName="userId" type="text" [disabled]="isUserIdDisabled()" />
-    <div *ngIf="analysisForm.get('userId')?.touched && analysisForm.get('userId')?.invalid">
+    <input
+      id="userId"
+      formControlName="userId"
+      type="text"
+      [disabled]="isUserIdDisabled()"
+    />
+    <div
+      *ngIf="
+        analysisForm.get('userId')?.touched &&
+        analysisForm.get('userId')?.invalid
+      "
+    >
       ID do Usuário é obrigatório.
     </div>
 
-    <button type="submit" [disabled]="isSubmitting">{{ isSubmitting ? 'Salvando...' : 'Criar' }}</button>
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? "Salvando..." : "Criar" }}
+    </button>
 
     <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
   </form>

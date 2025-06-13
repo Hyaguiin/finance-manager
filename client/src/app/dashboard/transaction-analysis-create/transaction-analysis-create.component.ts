@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TransactionService } from '../../services/transaction.service';
+import { Transaction } from '../../interfaces/financeInterface';
 
 @Component({
   selector: 'app-transaction-analysis-create',
@@ -16,10 +18,12 @@ export class TransactionAnalysisCreateComponent implements OnInit {
   analysisForm!: FormGroup;
   isSubmitting = false;
   errorMessage = '';
+  transactions: Transaction[] = [];
 
   constructor(
     private fb: FormBuilder,
     private analysisService: TransactionAnalysisService,
+    private transactionService: TransactionService,
     private router: Router,
     private authService: AuthService
   ) {}
@@ -36,7 +40,8 @@ export class TransactionAnalysisCreateComponent implements OnInit {
     });
 
     this.setUserId();
-    this.addCategory(); // adiciona pelo menos uma categoria
+    this.addCategory();
+    this.loadTransactions();
   }
 
   setUserId(): void {
@@ -63,6 +68,20 @@ export class TransactionAnalysisCreateComponent implements OnInit {
 
   removeCategory(index: number): void {
     this.categories.removeAt(index);
+  }
+
+  loadTransactions(): void {
+    const userId = this.authService.getUserId();
+    if (!userId) return;
+
+    this.transactionService.getTransactionsByUser(userId).subscribe({
+      next: (trans) => {
+        this.transactions = trans;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar transações:', err);
+      },
+    });
   }
 
   onSubmit(): void {

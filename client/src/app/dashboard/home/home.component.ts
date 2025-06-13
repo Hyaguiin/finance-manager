@@ -22,6 +22,8 @@ import {
   LineElement,
   BarElement,
 } from 'chart.js';
+import { TransactionAnalysisService } from '../../services/reports-analysis.service';
+import { TransactionAnalyse } from '../../interfaces/financeInterface';
 
 Chart.register(
   ArcElement,
@@ -48,6 +50,7 @@ Chart.register(
 export class HomeComponent implements OnInit {
   transactions: Transaction[] = [];
   products: Product[] = [];
+  analyses: TransactionAnalyse[] = [];  // NOVO: Armazenar análises
 
   totalTransactionAmount = 0;
   totalProductsCount = 0;
@@ -55,6 +58,7 @@ export class HomeComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
 
+  // Chart definitions (mantidos iguais)
   public pieChartType: ChartType = 'pie';
   public pieChartData: ChartData<'pie', number[], string> = {
     labels: [],
@@ -122,7 +126,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private analysisService: TransactionAnalysisService
   ) {}
 
   ngOnInit(): void {
@@ -133,6 +138,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.loadDashboardData(userId);
+    this.loadAnalyses(userId); // NOVO: carregar análises
   }
 
   loadDashboardData(userId: string): void {
@@ -197,6 +203,23 @@ export class HomeComponent implements OnInit {
         this.errorMessage = 'Ainda não foram feitas transações para esse usuário!.';
         console.error(err);
         this.isLoading = false;
+      },
+    });
+  }
+
+  getCategoryKeys(categories: Record<string, number>): string[] {
+  return Object.keys(categories);
+}
+
+  loadAnalyses(userId: string): void {
+    this.analysisService.getByUser(userId).subscribe({
+      next: (data) => {
+        this.analyses = data;
+        // Você pode manipular os dados aqui para mostrar algo no dashboard
+        // Exemplo: console.log(this.analyses);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar análises:', err);
       },
     });
   }

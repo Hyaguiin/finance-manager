@@ -5,8 +5,6 @@
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
   <div *ngIf="!isLoading && !errorMessage" class="content">
-    
-    <!-- Cartões de Resumo -->
     <section class="summary-cards">
       <div class="card">
         <h3>Total de Transações</h3>
@@ -14,7 +12,7 @@
       </div>
       <div class="card">
         <h3>Valor Total das Transações</h3>
-        <p>{{ totalTransactionAmount | currency: 'BRL' }}</p>
+        <p>{{ totalTransactionAmount | currency : "BRL" }}</p>
       </div>
       <div class="card">
         <h3>Total de Produtos</h3>
@@ -22,38 +20,76 @@
       </div>
     </section>
 
-    <!-- Gráfico de Pizza -->
-    <section class="charts-section" *ngIf="pieChartData.datasets[0].data.length">
+    <section
+      class="charts-section"
+      *ngIf="pieChartData.datasets[0].data.length"
+    >
       <h3>Distribuição por Tipo de Transação</h3>
       <canvas
         baseChart
         [data]="pieChartData"
         [type]="pieChartType"
-        [options]="pieChartOptions">
+        [options]="pieChartOptions"
+      >
       </canvas>
     </section>
 
-    <!-- Gráfico de Linha -->
-    <section class="charts-section" *ngIf="lineChartData.datasets[0].data.length">
+    <section
+      class="charts-section"
+      *ngIf="lineChartData.datasets[0].data.length"
+    >
       <h3>Transações ao Longo do Tempo</h3>
       <canvas
         baseChart
         [data]="lineChartData"
         [type]="lineChartType"
-        [options]="lineChartOptions">
+        [options]="lineChartOptions"
+      >
       </canvas>
     </section>
 
-    <!-- Gráfico de Barras -->
-    <section class="charts-section" *ngIf="barChartData.datasets[0].data.length">
+    <section
+      class="charts-section"
+      *ngIf="barChartData.datasets[0].data.length"
+    >
       <h3>Produtos por Tipo</h3>
       <canvas
         baseChart
         [data]="barChartData"
         [type]="barChartType"
-        [options]="barChartOptions">
+        [options]="barChartOptions"
+      >
       </canvas>
     </section>
-    
+    <section class="charts-section" *ngIf="analyses.length">
+      <h3>Análises de Transações</h3>
+
+      <div *ngFor="let analysis of analyses" class="analysis-card">
+        <h4>ID da Transação: {{ analysis.transactionId }}</h4>
+        <p>
+          <strong>Total:</strong> {{ analysis.totalAmount | currency : "BRL" }}
+        </p>
+        <p>
+          <strong>Crédito:</strong>
+          {{ analysis.totalCredit | currency : "BRL" }}
+        </p>
+        <p>
+          <strong>Débito:</strong> {{ analysis.totalDebit | currency : "BRL" }}
+        </p>
+
+        <div class="category-breakdown">
+          <p><strong>Por Categoria:</strong></p>
+          <ul>
+            <li *ngFor="let cat of getCategoryKeys(analysis.totalByCategory)">
+              {{ cat }}: {{ analysis.totalByCategory[cat] | currency : "BRL" }}
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          <em>Gerado em: {{ analysis.generatedAt | date : "short" }}</em>
+        </p>
+      </div>
+    </section>
   </div>
 </div>
