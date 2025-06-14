@@ -81,7 +81,11 @@ Content-Type: application/json
   "email": "user@example.com",
   "password": "password123"
 }
+```
 
-## Apresentação do sistema:
-[▶️ Assista à demonstração do projeto](videoFinance (1).mp4)
+### Apresentação do sistema:
+
+https://github.com/user-attachments/assets/7f0b41c9-9849-483b-8ce1-b4a73338e3c9
+
+
 
